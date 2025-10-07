@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Linking } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -27,21 +27,21 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ value, onValueChange })
 };
 
 function Login() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [newAccount, setNewAccount] = useState(true);
   const [saveId, setSaveId] = useState(false);
 
-  const toggleAccount = () => setNewAccount((p) => !p);
+  const toggleAccount = () => {
+    Linking.openURL("./Register.tsx");
+  };
 
   const handleLogin = async () => {
     try {
-      // 회원가입 중이 아니고, 체크되어있으면 저장
-      if (!newAccount && saveId && displayName) {
+      if (saveId && displayName) {
         await AsyncStorage.setItem("savedId", displayName);
         console.log("아이디 저장됨:", displayName);
       }
+      // 로그인 로직 들어갈 자리
       console.log("로그인/회원가입 처리 (시뮬레이션):", displayName);
     } catch (e) {
       console.error(e);
@@ -91,17 +91,17 @@ function Login() {
         </View>
 
         <View style={styles.checkboxAndSwitchRow}>
-          <View style={[styles.checkboxRow, !newAccount && { opacity: 0 }]}>
+          <View style={styles.checkboxRow}>
             <CustomCheckbox value={saveId} onValueChange={setSaveId} />
             <Text style={styles.checkboxLabel}>아이디 저장</Text>
           </View>
 
-          <Text style={styles.switchText} onPress={toggleAccount}>{!newAccount ? "로그인" : "회원가입"}</Text>
+          <Text style={styles.switchText} onPress={toggleAccount}>회원가입</Text>
         </View>
 
         <View style={styles.tabview}>
           <TouchableOpacity style={styles.tab} onPress={handleLogin}>
-            <Text style={styles.tabText}>{!newAccount ? "회원가입" : "로그인"}</Text>
+            <Text style={styles.tabText}>로그인</Text>
           </TouchableOpacity>
         </View>
       </View>
