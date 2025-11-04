@@ -1,0 +1,157 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+
+export default function Register() {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthdate, setBirthdate] = useState('');
+  const [userType, setUserType] = useState<'학생' | '교사'>('학생');
+
+  const handleSubmit = () => {
+    // 회원가입 로직 구현
+    console.log('회원가입:', { id, password, name, email, birthdate, userType });
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.typeSelector}>
+        <TouchableOpacity 
+          style={[styles.typeButton, userType === '학생' && styles.selectedType]}
+          onPress={() => setUserType('학생')}
+        >
+          <Text style={[styles.typeText, userType === '학생' && styles.selectedTypeText]}>학생</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.typeButton, userType === '교사' && styles.selectedType]}
+          onPress={() => setUserType('교사')}
+        >
+          <Text style={[styles.typeText, userType === '교사' && styles.selectedTypeText]}>교사</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="아이디 입력"
+          value={id}
+          onChangeText={setId}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호 입력"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호 확인"
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="이름"
+          value={name}
+          onChangeText={setName}
+        />
+        <View style={styles.dateInputs}>
+          <TextInput
+            style={[styles.input, styles.dateInput]}
+            placeholder="년도"
+            value={birthdate}
+            onChangeText={setBirthdate}
+          />
+          <TextInput
+            style={[styles.input, styles.dateInput]}
+            placeholder="월"
+          />
+          <TextInput
+            style={[styles.input, styles.dateInput]}
+            placeholder="일"
+          />
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder="이메일 주소"
+          value={email}
+          onChangeText={setEmail}
+        />
+      </View>
+
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <Text style={styles.submitButtonText}>회원가입</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FDFEFF',
+    padding: 20,
+  },
+  typeSelector: {
+    flexDirection: 'row',
+    marginBottom: 30,
+  },
+  typeButton: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  selectedType: {
+    backgroundColor: '#468BD7',
+    borderColor: '#468BD7',
+  },
+  typeText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  selectedTypeText: {
+    color: '#fff',
+  },
+  inputContainer: {
+    gap: 10,
+  },
+  input: {
+    borderWidth: 0.5,
+    borderRadius: 35,
+    borderColor: '#000000',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    fontSize: 24,
+    color: '#B7B7B7',
+  },
+  dateInputs: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  dateInput: {
+    flex: 1,
+  },
+  submitButton: {
+    backgroundColor: '#468BD7',
+    paddingVertical: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 20,
+  },
+  submitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 30,
+    fontWeight: '600',
+  },
+});

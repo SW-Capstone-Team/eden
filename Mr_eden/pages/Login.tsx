@@ -26,13 +26,18 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ value, onValueChange })
   );
 };
 
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../App';
+
 function Login() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [saveId, setSaveId] = useState(false);
 
   const toggleAccount = () => {
-    Linking.openURL("./Register.tsx");
+    navigation.navigate('Register');
   };
 
   const handleLogin = async () => {
@@ -43,6 +48,7 @@ function Login() {
       }
       // 로그인 로직 들어갈 자리
       console.log("로그인/회원가입 처리 (시뮬레이션):", displayName);
+      navigation.navigate('MainStudent');
     } catch (e) {
       console.error(e);
     }
@@ -140,7 +146,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10, 
     paddingHorizontal: 30, 
     color: "#B7B7B7",
-    fontWeight: "semibold",
+    fontWeight: "600",
     fontSize: 24,
     lineHeight: 50,
     marginTop: 10, 
@@ -201,15 +207,15 @@ const styles = StyleSheet.create({
     marginBottom: 10, 
   },
   tabText: { 
-    fontWeight: "semibold", 
+    fontWeight: "600", 
     fontSize: 30, 
     color: "#FFFFFF", 
   },
   switchText: { 
     paddingHorizontal: 8, 
     paddingVertical: 6, 
-    fontWeight: "semibold", 
-    fontSize: 18, 
+    fontWeight: "600",
+    fontSize: 18,
     color: "#393939", 
   },
 });
