@@ -43,11 +43,9 @@ export default function SubjectMain() {
   return (
     <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.schoolName}>한양중학교</Text>
-          <Text style={styles.userName}>김하늘 님</Text>
-        </View>
-      </View>
+            <Text style={styles.headerText}>한양중학교</Text>
+            <Text style={styles.headerText}>김하늘 님</Text>
+          </View>
 
       <ScrollView style={styles.subjectList}>
         <SubjectCard
@@ -97,26 +95,18 @@ export default function SubjectMain() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FAFDFE',
   },
   header: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 20,
-    alignItems: 'center',
   },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  schoolName: {
-    fontSize: 16,
-    color: '#666',
-  },
-  userName: {
-    fontSize: 16,
-    color: '#000',
+  headerText: {
+    fontSize: 20,
+    color: '#393939',
+    fontFamily: 'Pretendard',
     fontWeight: '600',
   },
   subjectList: {
@@ -156,10 +146,10 @@ const styles = StyleSheet.create({
   },
   addClassButton: {
     padding: 15,
-    borderRadius: 10,
+    marginHorizontal: 60,
+    borderRadius: 30,
     borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: '#999',
+    borderColor: '#393939',
     alignItems: 'center',
     marginTop: 10,
   },

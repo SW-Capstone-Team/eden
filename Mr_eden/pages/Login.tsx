@@ -81,6 +81,14 @@ function Login() {
   return (
     <SafeAreaProvider style={styles.safearea}>
       <View style={styles.container}>
+
+        <View style={styles.imageview}>
+          <Image 
+            //source={require("../assets/logo.png")}
+            style={styles.logoimage}
+          />
+        </View>
+
         <View style={styles.inputWrapper}>
           <TextInput
             placeholder="ID"
@@ -103,13 +111,6 @@ function Login() {
           />
         </View>
 
-        <View style={styles.imageview}>
-          <Image 
-            //source={require("../assets/logo.png")}
-            style={styles.logoimage}
-          />
-        </View>
-
         <View style={styles.checkboxAndSwitchRow}>
           <View style={styles.checkboxRow}>
             <CustomCheckbox value={saveId} onValueChange={setSaveId} />
@@ -124,6 +125,7 @@ function Login() {
             <Text style={styles.tabText}>로그인</Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.switchText}>계정을 잃어버리셨나요?</Text>
       </View>
       <StatusBar barStyle="dark-content" backgroundColor={"transparent"} translucent={true} />
     </SafeAreaProvider>
@@ -199,12 +201,12 @@ const styles = StyleSheet.create({
     lineHeight: 20, 
   },
   checkboxLabel: { 
-    fontSize: 18, 
+    fontSize: 18,
+    fontFamily: 'Pretendard',
     fontWeight: "semibold", 
     color: "#393939", 
     marginLeft: 8, 
   },
-
   tabview: { 
     flexDirection: "row", 
     alignItems: "center", 
@@ -226,6 +228,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF", 
   },
   switchText: { 
+    textAlign: 'center',
     paddingHorizontal: 8, 
     paddingVertical: 6, 
     fontWeight: "600",

@@ -14,7 +14,10 @@ type SubjectItemProps = {
 
 const SubjectItem: React.FC<SubjectItemProps> = (props) => (
   <View style={styles.subjectItem}>
-    <Text style={styles.subjectText}>{props.subject}</Text>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Text style={styles.mainText}>{props.subject}</Text>
+      <Text style={styles.mainText}>{props.time}</Text>
+    </View>
     <Text style={styles.classText}>{props.class}</Text>
   </View>
 );
@@ -24,17 +27,15 @@ export default function MainStudent() {
   return (
     <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.schoolName}>한양중학교</Text>
-          <Text style={styles.userName}>김하늘 님</Text>
-        </View>
+        <Text style={styles.headerText}>한양중학교</Text>
+        <Text style={styles.headerText}>김하늘 님</Text>
       </View>
 
       <View style={styles.achievementBox}>
         <View style={styles.starIcon}>
-          <Ionicons name="star" size={50} color="#468BD7" />
+          <Ionicons name="star" size={100} color="#468BD7" />
         </View>
-        <Text style={styles.achievementText}>3일째 과제 학습 달성!</Text>
+        <Text style={styles.mainText}>3일째 과제 학습 달성!</Text>
       </View>
 
       <ScrollView style={styles.subjectList}>
@@ -42,6 +43,7 @@ export default function MainStudent() {
         <SubjectItem subject="수학2-2" time="D-2" class="교과서 중단원 평가 풀어오기" />
         <SubjectItem subject="국어2-2" time="D-3" class="필수어법 5개 암기하기" />
         <SubjectItem subject="국어2-2" time="D-6" class="작품 분석 과제" />
+        <SubjectItem subject="수학2-2" time="D-7" class="중간고사"/>
       </ScrollView>
 
       <View style={styles.tabBar}>
@@ -49,6 +51,7 @@ export default function MainStudent() {
           <Ionicons name="home" size={24} color="#468BD7" />
           <Text style={styles.tabText}>Home</Text>
         </TouchableOpacity>
+
         <TouchableOpacity 
           style={styles.tabItem} 
           onPress={() => navigation.navigate('SubjectMain')}
@@ -56,6 +59,7 @@ export default function MainStudent() {
           <Ionicons name="book" size={24} color="#666" />
           <Text style={[styles.tabText, styles.tabTextInactive]}>Subject</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity style={styles.tabItem}>
           <Ionicons name="settings" size={24} color="#666" />
           <Text style={[styles.tabText, styles.tabTextInactive]}>Setting</Text>
@@ -68,77 +72,56 @@ export default function MainStudent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FAFDFE',
   },
   header: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 20,
-    alignItems: 'center',
   },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  schoolName: {
-    fontSize: 16,
-    color: '#666',
-  },
-  userName: {
-    fontSize: 16,
-    color: '#000',
+  headerText: {
+    fontSize: 20,
+    color: '#393939',
+    fontFamily: 'Pretendard',
     fontWeight: '600',
   },
   achievementBox: {
-    backgroundColor: '#FFFFFF',
     margin: 20,
     padding: 20,
-    borderRadius: 15,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   starIcon: {
     marginBottom: 10,
   },
-  achievementText: {
-    fontSize: 18,
-    fontWeight: '600',
+  mainText: {
+    fontFamily: 'Pretentard',
+    fontSize: 17,
+    fontWeight: 'semibold',
     color: '#000',
   },
   subjectList: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
   },
   subjectItem: {
+    flex: 1,
     backgroundColor: '#FFFFFF',
     padding: 20,
-    borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#EEEEEE',
-  },
-  subjectText: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
+    borderRadius: 30,
+    borderColor: '#393939',
   },
   classText: {
-    fontSize: 14,
-    color: '#666',
+    paddingTop: 30,
+    fontSize: 17,
   },
   tabBar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#00000088)',
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
   },
