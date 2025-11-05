@@ -4,6 +4,7 @@
   "exclude": ["**/node_modules", "**/Pods"],
   "compilerOptions": {
     "jsx": "react",
+    "resolveJsonModule": true
     // ...다른 설정들...
   }
 }

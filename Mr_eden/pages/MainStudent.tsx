@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 type SubjectItemProps = {
   subject: string;
@@ -21,7 +22,7 @@ const SubjectItem: React.FC<SubjectItemProps> = (props) => (
 export default function MainStudent() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Text style={styles.schoolName}>한양중학교</Text>
@@ -60,7 +61,7 @@ export default function MainStudent() {
           <Text style={[styles.tabText, styles.tabTextInactive]}>Setting</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

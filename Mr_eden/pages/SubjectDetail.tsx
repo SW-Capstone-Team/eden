@@ -5,13 +5,13 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
   Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@react-native-vector-icons/ionicons';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 type AssignmentItemProps = {
   title: string;
@@ -23,7 +23,7 @@ type AssignmentItemProps = {
 const AssignmentItem = ({ title, date, time, score }: AssignmentItemProps) => (
   <TouchableOpacity style={styles.assignmentCard}>
     <View style={styles.assignmentHeader}>
-      <Image style={styles.thumbnail} source={require('../assets/doc-thumbnail.png')} />
+      <Image style={styles.thumbnail} />
       <View style={styles.assignmentInfo}>
         <Text style={styles.assignmentTitle}>{title}</Text>
         <Text style={styles.dateTime}>{date} {time}</Text>
@@ -37,7 +37,7 @@ export default function SubjectDetail() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton}
@@ -86,7 +86,7 @@ export default function SubjectDetail() {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

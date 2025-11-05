@@ -5,8 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Register() {
   const [id, setId] = useState('');
@@ -22,7 +22,7 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
       <View style={styles.typeSelector}>
         <TouchableOpacity 
           style={[styles.typeButton, userType === '학생' && styles.selectedType]}
@@ -90,7 +90,7 @@ export default function Register() {
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>회원가입</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

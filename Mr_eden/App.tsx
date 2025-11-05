@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import MainStudent from './pages/MainStudent';
 import SubjectMain from './pages/SubjectMain';
 import SubjectDetail from './pages/SubjectDetail';
+import Register from './pages/Register';
 import { FontAwesome } from "@expo/vector-icons";
 
 export type RootStackParamList = {
@@ -26,6 +27,11 @@ export default function App() {
           name="Login" 
           component={Login} 
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
         />
         <Stack.Screen 
           name="MainStudent" 
