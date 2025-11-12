@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Animated } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -28,28 +28,98 @@ const SubjectItem: React.FC<SubjectItemProps> = (props) => {
 
 export default function MainStudent() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    {
+      useNativeDriver: false,
+      listener: (event: any) => {
+        const offsetY = event.nativeEvent.contentOffset.y;
+        setIsScrolled(offsetY > 50);
+      },
+    }
+  );
+
+  // 애니메이션 값들
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [270, 120],
+    extrapolate: 'clamp',
+  });
+
+  const starSize = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [150, 50],
+    extrapolate: 'clamp',
+  });
+
+  const starMarginBottom = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [70, 0],
+    extrapolate: 'clamp',
+  });
+
+  const textOpacity = scrollY.interpolate({
+    inputRange: [0, 50, 100],
+    outputRange: [1, 0.5, 0],
+    extrapolate: 'clamp',
+  });
+
+  const textPosition = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [0, -20],
+    extrapolate: 'clamp',
+  });
+
   return (
     <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerLeftGroup}><Image source={require('../assets/hanyang.png')} style={{width: 25, height: 25}} />
-        <Text style={styles.headerText}>한양중학교</Text>
+        <View style={styles.headerLeftGroup}>
+          <Image source={require('../assets/hanyang.png')} style={{width: 25, height: 25}} />
+          <Text style={styles.headerText}>한양중학교</Text>
         </View>
         <Text style={styles.headerText}>김하냥 님</Text>
       </View>
 
-      <View style={styles.achievementBox}>
-        {/* <View style={styles.starIcon}>
-          <Ionicons name="star" size={100} color="#468BD7" />
-        </View> */}
-        <Image source={require('../assets/star.png')} style={styles.starIcon} />
-        <Text style={styles.achievementBoxText}>3일째 과제 학습 달성!</Text>
-      </View>
+      <Animated.View style={[styles.achievementBox, { height: headerHeight }]}>
+        <Animated.Image 
+          source={require('../assets/star.png')} 
+          style={[
+            styles.starIcon,
+            {
+              width: starSize,
+              height: starSize,
+              marginBottom: starMarginBottom,
+            }
+          ]} 
+        />
+        <Animated.Text 
+          style={[
+            styles.achievementBoxText,
+            {
+              opacity: textOpacity,
+              transform: [{ translateY: textPosition }],
+            }
+          ]}
+        >
+          3일째 과제 학습 달성!
+        </Animated.Text>
+      </Animated.View>
 
-      <ScrollView 
+      {isScrolled && (
+        <View style={styles.collapsedTextContainer}>
+          <Text style={styles.collapsedText}>3일째 과제 학습 달성!</Text>
+        </View>
+      )}
+
+      <Animated.ScrollView 
         style={styles.subjectList}
         showsVerticalScrollIndicator={false}
         decelerationRate={1}
-        scrollEventThrottle={100}
+        scrollEventThrottle={16}
+        onScroll={handleScroll}
       >
         <SubjectItem subject="English" time="4시간 남음" class="주제별표 자료 제출" />
         <SubjectItem subject="화학1" time="D-1" class="쪽지시험" />
@@ -60,7 +130,7 @@ export default function MainStudent() {
         <SubjectItem subject="기하와 백터" time="D-7" class="중간고사"/>
         <SubjectItem subject="미적분1" time="D-10" class="중간고사" />
         <SubjectItem subject="기하와 백터" time="D-13" class="중단원 문제 풀이 과제" />
-      </ScrollView>
+      </Animated.ScrollView>
 
       <View style={styles.tabBar}>
         <TouchableOpacity style={styles.tabItem}>
@@ -117,6 +187,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     padding: 20,
     alignItems: 'center',
+    overflow: 'hidden',
   },
   achievementBoxText: {
     fontFamily: 'Pretendard',
@@ -128,6 +199,18 @@ const styles = StyleSheet.create({
     marginBottom: 70,
     width: 150,
     height: 150,
+  },
+  collapsedTextContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    backgroundColor: '#FAFDFE',
+  },
+  collapsedText: {
+    fontFamily: 'Pretendard',
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
+    textAlign: 'center',
   },
   mainText: {
     fontFamily: 'Pretendard',
