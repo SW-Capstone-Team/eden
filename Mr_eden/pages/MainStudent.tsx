@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 40,
+    padding: 30,
   },
   headerLeftGroup: {
     flexDirection: 'row', 
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   subjectList: {
     flex: 1,
-    paddingHorizontal: 40,
+    paddingHorizontal: 31,
   },
   subjectItem: {
     flex: 1,

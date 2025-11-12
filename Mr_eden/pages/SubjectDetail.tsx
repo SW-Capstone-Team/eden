@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   assignmentCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
+    borderRadius: 28,
     padding: 16,
     marginBottom: 8,
     borderWidth: 1,
