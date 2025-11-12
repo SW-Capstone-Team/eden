@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -43,9 +43,12 @@ export default function SubjectMain() {
   return (
     <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
-            <Text style={styles.headerText}>한양중학교</Text>
-            <Text style={styles.headerText}>김하늘 님</Text>
-          </View>
+              <View style={styles.headerLeftGroup}>
+                <Image source={require('../assets/hanyang.png')} style={{width: 25, height: 25}} />
+                <Text style={styles.headerText}>한양중학교</Text>
+              </View>
+              <Text style={styles.headerText}>김하늘 님</Text>
+            </View>
 
       <ScrollView style={styles.subjectList}>
         <SubjectCard
@@ -98,10 +101,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFDFE',
   },
   header: {
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 30,
+  },
+  headerLeftGroup: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    gap: 8, 
   },
   headerText: {
     fontSize: 20,
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
   },
   subjectCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
+    borderRadius: 28,
     padding: 20,
     marginBottom: 10,
     borderWidth: 1,
