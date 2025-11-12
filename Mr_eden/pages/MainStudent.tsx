@@ -35,7 +35,7 @@ export default function MainStudent() {
         <View style={styles.starIcon}>
           <Ionicons name="star" size={100} color="#468BD7" />
         </View>
-        <Text style={styles.mainText}>3일째 과제 학습 달성!</Text>
+        <Text style={styles.achievementBoxText}>3일째 과제 학습 달성!</Text>
       </View>
 
       <ScrollView style={styles.subjectList}>
@@ -76,9 +76,10 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: 20,
+    marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 40,
   },
   headerText: {
     fontSize: 20,
@@ -87,15 +88,25 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   achievementBox: {
-    margin: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    marginHorizontal: 20,
     padding: 20,
     alignItems: 'center',
   },
+  achievementBoxText: {
+    fontFamily: 'Pretendard',
+    fontSize: 23,
+    fontWeight: 'semibold',
+    color: '#000',
+  },
   starIcon: {
-    marginBottom: 10,
+    marginBottom: 100,
+    width: 100,
+    height: 100,
   },
   mainText: {
-    fontFamily: 'Pretentard',
+    fontFamily: 'Pretendard',
     fontSize: 17,
     fontWeight: 'semibold',
     color: '#000',
