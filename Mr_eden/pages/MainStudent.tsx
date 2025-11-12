@@ -30,7 +30,7 @@ export default function MainStudent() {
         <View style={styles.headerLeftGroup}><Image source={require('../assets/hanyang.png')} style={{width: 25, height: 25}} />
         <Text style={styles.headerText}>한양중학교</Text>
         </View>
-        <Text style={styles.headerText}>김하늘 님</Text>
+        <Text style={styles.headerText}>김하냥 님</Text>
       </View>
 
       <View style={styles.achievementBox}>
@@ -51,7 +51,7 @@ export default function MainStudent() {
 
       <View style={styles.tabBar}>
         <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="home" size={24} color="#468BD7" />
+          <Ionicons name="home-outline" size={24} color="#468BD7" />
           <Text style={styles.tabText}>Home</Text>
         </TouchableOpacity>
 
@@ -59,12 +59,15 @@ export default function MainStudent() {
           style={styles.tabItem} 
           onPress={() => navigation.navigate('SubjectMain')}
         >
-          <Ionicons name="book" size={24} color="#666" />
+          <Ionicons name="layers-outline" size={24} color="#666" />
           <Text style={[styles.tabText, styles.tabTextInactive]}>Subject</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="settings" size={24} color="#666" />
+        <TouchableOpacity 
+          style={styles.tabItem}
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Ionicons name="settings-outline" size={24} color="#666" />
           <Text style={[styles.tabText, styles.tabTextInactive]}>Setting</Text>
         </TouchableOpacity>
       </View>
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFDFE',
   },
   header: {
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -140,7 +143,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-    backgroundColor: '#00000088)',
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
   },

@@ -6,6 +6,7 @@ import MainStudent from './pages/MainStudent';
 import SubjectMain from './pages/SubjectMain';
 import SubjectDetail from './pages/SubjectDetail';
 import Register from './pages/Register';
+import Settings from './pages/Settings';
 import { FontAwesome } from "@expo/vector-icons";
 
 export type RootStackParamList = {
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   MainStudent: undefined;
   SubjectMain: undefined;
   SubjectDetail: undefined;
+  Settings: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -46,6 +48,11 @@ export default function App() {
         <Stack.Screen 
           name="SubjectDetail" 
           component={SubjectDetail} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Settings" 
+          component={Settings} 
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
