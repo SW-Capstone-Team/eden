@@ -45,19 +45,13 @@ export default function MainStudent() {
   // 애니메이션 값들
   const headerHeight = scrollY.interpolate({
     inputRange: [0, 100],
-    outputRange: [270, 120],
-    extrapolate: 'clamp',
-  });
-
-  const starSize = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [150, 50],
+    outputRange: [270, 190],
     extrapolate: 'clamp',
   });
 
   const starMarginBottom = scrollY.interpolate({
     inputRange: [0, 100],
-    outputRange: [70, 0],
+    outputRange: [20, 10],
     extrapolate: 'clamp',
   });
 
@@ -89,8 +83,6 @@ export default function MainStudent() {
           style={[
             styles.starIcon,
             {
-              width: starSize,
-              height: starSize,
               marginBottom: starMarginBottom,
             }
           ]} 
@@ -196,7 +188,6 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   starIcon: {
-    marginBottom: 70,
     width: 150,
     height: 150,
   },

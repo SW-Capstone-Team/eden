@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import ToggleSwitch from 'toggle-switch-react-native'
 
 type MenuItemProps = {
   title: string;
@@ -12,13 +13,14 @@ type MenuItemProps = {
   showSwitch?: boolean;
   switchValue?: boolean;
   onSwitchChange?: (value: boolean) => void;
+  versionText?: string;
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ title, onPress, showSwitch, switchValue, onSwitchChange }) => (
+const MenuItem: React.FC<MenuItemProps> = ({ title, onPress, showSwitch, switchValue, onSwitchChange, versionText }) => (
   <TouchableOpacity 
     style={styles.menuItem} 
     onPress={onPress}
-    disabled={showSwitch}
+    disabled={showSwitch || !!versionText}
   >
     <Text style={styles.menuText}>{title}</Text>
     {showSwitch ? (
@@ -28,6 +30,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ title, onPress, showSwitch, switchV
         trackColor={{ false: '#767577', true: '#81b0ff' }}
         thumbColor={switchValue ? '#fff' : '#f4f3f4'}
       />
+    ) : versionText ? (
+      <Text style={styles.versionText}>{versionText}</Text>
     ) : (
       <Ionicons name="chevron-forward" size={24} color="#fff" />
     )}
@@ -83,7 +87,7 @@ export default function Settings() {
             <View style={styles.menuDivider} />
             <MenuItem 
               title="버전 정보"
-              onPress={() => {/* 버전 정보 화면으로 이동 */}}
+              versionText="v1.0.0"
             />
           </MenuSection>
 
@@ -206,6 +210,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#fff',
     fontWeight: '500',
+    fontFamily: 'Pretendard',
+  },
+  versionText: {
+    fontSize: 17,
+    color: '#fff',
+    fontWeight: '400',
     fontFamily: 'Pretendard',
   },
   menuDivider: {
