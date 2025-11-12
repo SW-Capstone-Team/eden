@@ -84,7 +84,7 @@ function Login() {
 
         <View style={styles.imageview}>
           <Image 
-            //source={require("../assets/logo.png")}
+            source={require("../assets/logo.png")}
             style={styles.logoimage}
           />
         </View>
@@ -92,6 +92,7 @@ function Login() {
         <View style={styles.inputWrapper}>
           <TextInput
             placeholder="ID"
+            placeholderTextColor="#B7B7B7"
             style={styles.input}
             autoCapitalize="none"
             value={displayName}
@@ -101,6 +102,7 @@ function Login() {
 
           <TextInput
             placeholder="PASSWORD"
+            placeholderTextColor="#B7B7B7"
             style={styles.input}
             autoCapitalize="none"
             secureTextEntry={true}
@@ -139,10 +141,11 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     paddingVertical: 30, 
-    paddingHorizontal: 20, 
+    paddingHorizontal: 40, 
     backgroundColor: "#FDFEFF", 
   },
-  imageview: { 
+  imageview: {
+    marginTop: 180, 
     flexDirection: "row", 
   },
   logoimage: { 
@@ -153,7 +156,6 @@ const styles = StyleSheet.create({
 
   inputWrapper: { 
     paddingVertical: 15, 
-    marginTop: 40, 
   },
   input: { 
     borderWidth: 0.5, 
@@ -161,19 +163,18 @@ const styles = StyleSheet.create({
     borderColor: "#000000",
     paddingVertical: 10, 
     paddingHorizontal: 30, 
-    color: "#B7B7B7",
+    color: "#393939",
     fontWeight: "600",
     fontSize: 24,
     lineHeight: 50,
-    marginTop: 10, 
+    marginTop: 20, 
   },
 
   checkboxAndSwitchRow: {
     flexDirection: "row", 
     alignItems: "center", 
-    justifyContent: "space-between", 
-    marginTop: 12, 
-    marginBottom: 12,
+    justifyContent: "space-between",
+    marginBottom: 20,
   },
   checkboxRow: { 
     flexDirection: "row", 
