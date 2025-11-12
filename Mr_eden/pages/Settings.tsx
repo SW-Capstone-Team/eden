@@ -57,7 +57,10 @@ export default function Settings() {
       <SafeAreaView edges={['top']} style={styles.safeArea}>
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           {/* Profile Section */}
-          <TouchableOpacity style={styles.profileSection}>
+          <TouchableOpacity 
+            style={styles.profileSection}
+            onPress={() => navigation.navigate('ProfileSettings')}
+          >
             <View style={styles.profileImageContainer}>
               <Image 
                 source={require('../assets/하냥.png')} 
