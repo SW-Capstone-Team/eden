@@ -12,15 +12,19 @@ type SubjectItemProps = {
   time: string;
 };
 
-const SubjectItem: React.FC<SubjectItemProps> = (props) => (
-  <View style={styles.subjectItem}>
-    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-      <Text style={styles.mainText}>{props.subject}</Text>
-      <Text style={styles.mainText}>{props.time}</Text>
+const SubjectItem: React.FC<SubjectItemProps> = (props) => {
+  // 과제 내용에 '시험', '고사' 등의 키워드가 있으면 시험으로 판단
+  const isExam = props.class.includes('시험') || props.class.includes('고사') || props.class.includes('평가');
+  return (
+    <View style={[styles.subjectItem, isExam && styles.subjectItemExam]}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={[styles.mainText, isExam && styles.mainTextExam]}>{props.subject}</Text>
+        <Text style={[styles.mainText, isExam && styles.mainTextExam]}>{props.time}</Text>
+      </View>
+      <Text style={[styles.classText, isExam && styles.classTextExam]}>{props.class}</Text>
     </View>
-    <Text style={styles.classText}>{props.class}</Text>
-  </View>
-);
+  );
+};
 
 export default function MainStudent() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -41,12 +45,21 @@ export default function MainStudent() {
         <Text style={styles.achievementBoxText}>3일째 과제 학습 달성!</Text>
       </View>
 
-      <ScrollView style={styles.subjectList}>
-        <SubjectItem subject="영어2-2" time="4시간 남음" class="주제별표 자료 제출" />
-        <SubjectItem subject="수학2-2" time="D-2" class="교과서 중단원 평가 풀어오기" />
-        <SubjectItem subject="국어2-2" time="D-3" class="필수어법 5개 암기하기" />
-        <SubjectItem subject="국어2-2" time="D-6" class="작품 분석 과제" />
-        <SubjectItem subject="수학2-2" time="D-7" class="중간고사"/>
+      <ScrollView 
+        style={styles.subjectList}
+        showsVerticalScrollIndicator={false}
+        decelerationRate={1}
+        scrollEventThrottle={100}
+      >
+        <SubjectItem subject="English" time="4시간 남음" class="주제별표 자료 제출" />
+        <SubjectItem subject="화학1" time="D-1" class="쪽지시험" />
+        <SubjectItem subject="미적분" time="D-1" class="교과서 중단원 문제 풀어오기" />
+        <SubjectItem subject="언어와 매체" time="D-3" class="필수어법 5개 암기하기" />
+        <SubjectItem subject="생명과학1" time="D-4" class="중간평가" />
+        <SubjectItem subject="언어와 매체" time="D-6" class="작품 분석 과제" />
+        <SubjectItem subject="기하와 백터" time="D-7" class="중간고사"/>
+        <SubjectItem subject="미적분1" time="D-10" class="중간고사" />
+        <SubjectItem subject="기하와 백터" time="D-13" class="중단원 문제 풀이 과제" />
       </ScrollView>
 
       <View style={styles.tabBar}>
@@ -135,9 +148,19 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: '#393939',
   },
+  subjectItemExam: {
+    backgroundColor: '#5B8BC7',
+    borderColor: '#468BD7',
+  },
+  mainTextExam: {
+    color: '#FFFFFF',
+  },
   classText: {
     paddingTop: 30,
     fontSize: 17,
+  },
+  classTextExam: {
+    color: '#FFFFFF',
   },
   tabBar: {
     flexDirection: 'row',
