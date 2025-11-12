@@ -27,7 +27,9 @@ export default function MainStudent() {
   return (
     <SafeAreaProvider style={styles.container}>
       <View style={styles.header}>
+        <View style={styles.headerLeftGroup}><Image source={require('../assets/hanyang.png')} style={{width: 25, height: 25}} />
         <Text style={styles.headerText}>한양중학교</Text>
+        </View>
         <Text style={styles.headerText}>김하늘 님</Text>
       </View>
 
@@ -81,6 +83,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 40,
+  },
+  headerLeftGroup: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    gap: 8, 
   },
   headerText: {
     fontSize: 20,
