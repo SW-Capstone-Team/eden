@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -32,9 +32,10 @@ export default function MainStudent() {
       </View>
 
       <View style={styles.achievementBox}>
-        <View style={styles.starIcon}>
+        {/* <View style={styles.starIcon}>
           <Ionicons name="star" size={100} color="#468BD7" />
-        </View>
+        </View> */}
+        <Image source={require('../assets/star.png')} style={styles.starIcon} />
         <Text style={styles.achievementBoxText}>3일째 과제 학습 달성!</Text>
       </View>
 
@@ -75,8 +76,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFDFE',
   },
   header: {
-    marginTop: 20,
-    marginBottom: 30,
+    marginTop: 10,
+    marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 40,
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   },
   achievementBox: {
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     marginHorizontal: 20,
     padding: 20,
     alignItems: 'center',
@@ -101,9 +102,9 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   starIcon: {
-    marginBottom: 100,
-    width: 100,
-    height: 100,
+    marginBottom: 70,
+    width: 150,
+    height: 150,
   },
   mainText: {
     fontFamily: 'Pretendard',
