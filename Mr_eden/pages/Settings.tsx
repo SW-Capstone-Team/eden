@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import ToggleSwitch from 'toggle-switch-react-native'
 
 type MenuItemProps = {
   title: string;

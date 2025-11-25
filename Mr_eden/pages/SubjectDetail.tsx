@@ -195,15 +195,16 @@ export default function SubjectDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#FAFDFE',
   },
   scrollView: {
     flex: 1,
   },
   headerSection: {
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#FAFDFE',
     padding: 20,
     paddingTop: 60,
+    marginTop: 20,
   },
   headerTop: {
     flexDirection: 'row',
