@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Animated,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -53,14 +54,25 @@ const AssignmentItem = ({ title, daysLeft, time, dueDate }: AssignmentItemProps)
 
 export default function SubjectDetail() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    {
+      useNativeDriver: false,
+      listener: (event: any) => {
+        const offsetY = event.nativeEvent.contentOffset.y;
+        // 과목 소개 섹션을 넘어가면 헤더에 제목 표시 (약 150px 기준)
+        setIsScrolled(offsetY > 100);
+      },
+    }
+  );
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <ScrollView 
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header Section */}
+
+      {/* Header Section */}
         <View style={styles.headerSection}>
           <View style={styles.headerTop}>
             <View style={styles.titleContainer}>
@@ -70,21 +82,42 @@ export default function SubjectDetail() {
               >
                 <Ionicons name="chevron-back" size={32} color="#333" />
               </TouchableOpacity>
-              <Text style={styles.subjectTitle}>수학2-2</Text>
-            </View>
-            <View style={styles.iconPlaceholder}>
-              <Ionicons name="analytics" size={40} color="#468BD7" />
+              {isScrolled && (
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Text style={styles.headerSubjectTitle}>수학2-2 (현우진)</Text>
+                </View>
+              )}
             </View>
           </View>
-          <Text style={styles.teacherName}>정진우</Text>
+        </View>
+
+      <ScrollView 
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={handleScroll}
+      >
+        {/* 과목 소개 */}
+        <View style={styles.subjectIntroSection}>
+          <View style={styles.headerTop}>
+            <View style={styles.titleContainer}>
+
+              <View style={styles.textPlaceholder}>
+                <Text style={styles.subjectTitle}>수학2-2</Text>
+                <Text style={styles.sectionTitle}>현우진</Text>
+              </View>
+
+              <View style={styles.iconPlaceholder}>
+                <Ionicons name="calculator" size={60} color="#468BD7" />
+              </View>
+
+            </View>
+          </View>
         </View>
 
         {/* 현재 진행중인 퀴즈 */}
         <View style={styles.section}>
           <TouchableOpacity style={styles.quizActiveCard}>
-            {/* <View style={styles.quizActiveHeader}>
-              <Text style={styles.quizActiveLabel}>현재 진행중인 퀴즈</Text>
-            </View> */}
             <Text style={styles.quizActiveLabel}>현재 진행중인 퀴즈</Text>
             <Text style={styles.quizActiveTitle}>쪽지시험</Text>
             <View style={styles.quizActiveFooter}>
@@ -93,76 +126,94 @@ export default function SubjectDetail() {
           </TouchableOpacity>
         </View>
 
-        {/* 오답된 자료 */}
+        {/* 학습 자료 */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>오답된 자료</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeMore}>모두보기</Text>
-            </TouchableOpacity>
+          <View style={styles.sectionCard}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>학습 자료</Text>
+              <TouchableOpacity>
+                <Text style={styles.seeMore}>모두보기</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              style={styles.horizontalScroll}
+            >
+              <View style={styles.documentCard}>
+                <Image source={require('../assets/study_document.png')} style={styles.documentPreview} />
+                <View style={styles.documentTitlePlaceholder}>
+                  <Text style={styles.documentTitle}>250927 수업자료</Text>
+                </View>
+              </View>
+              <View style={styles.documentCard}>
+                <Image source={require('../assets/study_document.png')} style={styles.documentPreview} />
+                <View style={styles.documentTitlePlaceholder}>
+                  <Text style={styles.documentTitle}>250930 수업자료 (1)</Text>
+                </View>
+              </View>
+              <View style={styles.documentCard}>
+                <Image source={require('../assets/study_document.png')} style={styles.documentPreview} />
+                <View style={styles.documentTitlePlaceholder}>
+                  <Text style={styles.documentTitle}>250930 수업자료 (2)</Text>
+                </View>
+              </View>
+              <View style={styles.documentCard}>
+                <Image source={require('../assets/study_document.png')} style={styles.documentPreview} />
+                <View style={styles.documentTitlePlaceholder}>
+                  <Text style={styles.documentTitle}>250927 수업자료</Text>
+                </View>
+              </View>
+            </ScrollView>
           </View>
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            style={styles.horizontalScroll}
-          >
-            <View style={styles.documentCard}>
-              <View style={styles.documentPreview} />
-              <Text style={styles.documentTitle}>250927 수업자료</Text>
-            </View>
-            <View style={styles.documentCard}>
-              <View style={styles.documentPreview} />
-              <Text style={styles.documentTitle}>250930 수업자료 (1)</Text>
-            </View>
-            <View style={styles.documentCard}>
-              <View style={styles.documentPreview} />
-              <Text style={styles.documentTitle}>250930 수업자료 (2)</Text>
-            </View>
-          </ScrollView>
         </View>
 
         {/* 퀴즈 일정 */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>퀴즈 일정</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeMore}>모두보기</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.whiteSection}>
-            <QuizItem title="쪽지시험" daysLeft="D-7" dueDate="25/09/30" />
-            <QuizItem title="중간고사" daysLeft="D-7" dueDate="25/10/07" />
-            <QuizItem title="단원평가" daysLeft="D-20" dueDate="25/10/20" />
+          <View style={styles.sectionCard}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>퀴즈 일정</Text>
+              <TouchableOpacity>
+                <Text style={styles.seeMore}>모두보기</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.whiteSection}>
+              <QuizItem title="쪽지시험" daysLeft="D-7" dueDate="25/09/30" />
+              <QuizItem title="중간고사" daysLeft="D-7" dueDate="25/10/07" />
+              <QuizItem title="단원평가" daysLeft="D-20" dueDate="25/10/20" />
+            </View>
           </View>
         </View>
 
         {/* 과제 일정 */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>과제 일정</Text>
-            <TouchableOpacity>
-              <Text style={styles.seeMore}>모두보기</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.whiteSection}>
-            <AssignmentItem 
-              title="교과서 중단원 평가 풀어오기" 
-              daysLeft="D-2" 
-              time="23:59"
-              dueDate="25/10/02"
-            />
-            <AssignmentItem 
-              title="오답노트 작성" 
-              daysLeft="D-14" 
-              time="13:00"
-              dueDate="25/10/14"
-            />
-            <AssignmentItem 
-              title="주별평가 지문 제출" 
-              daysLeft="D-17" 
-              time="23:59"
-              dueDate="25/10/17"
-            />
+          <View style={styles.sectionCard}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>과제 일정</Text>
+              <TouchableOpacity>
+                <Text style={styles.seeMore}>모두보기</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.whiteSection}>
+              <AssignmentItem 
+                title="교과서 중단원 평가 풀어오기" 
+                daysLeft="D-2" 
+                time="23:59"
+                dueDate="25/10/02"
+              />
+              <AssignmentItem 
+                title="오답노트 작성" 
+                daysLeft="D-14" 
+                time="13:00"
+                dueDate="25/10/14"
+              />
+              <AssignmentItem 
+                title="주별평가 지문 제출" 
+                daysLeft="D-17" 
+                time="23:59"
+                dueDate="25/10/17"
+              />
+            </View>
           </View>
         </View>
 
@@ -182,14 +233,6 @@ export default function SubjectDetail() {
           </View>
         </View>
       </ScrollView>
-
-      {/* Floating Action Buttons */}
-      <TouchableOpacity style={[styles.fab, styles.fabPrimary]}>
-        <Text style={styles.fabText}>강</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.fab, styles.fabSecondary]}>
-        <Text style={styles.fabText}>강</Text>
-      </TouchableOpacity>
     </SafeAreaProvider>
   );
 }
@@ -205,22 +248,41 @@ const styles = StyleSheet.create({
   headerSection: {
     backgroundColor: '#FAFDFE',
     padding: 20,
-    paddingTop: 60,
-    marginTop: 20,
+    // paddingTop: 60,
+    marginTop: 40,
+    paddingBottom: 10,
   },
   headerTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    // marginBottom: 8,
+  },
+  subjectIntroSection: {
+    backgroundColor: '#FAFDFE',
+    padding: 30,
+    paddingTop: 0,
+    paddingLeft: 40,
+    // marginBottom: 20,
   },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  textPlaceholder: {
+    gap: 30,
+    flex: 1,
+  },
   backButton: {
     marginRight: 8,
     padding: 5,
+  },
+  headerSubjectTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#000',
+    fontFamily: 'Pretendard',
+    flex: 1,
   },
   subjectTitle: {
     fontSize: 28,
@@ -242,6 +304,18 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 20,
     paddingHorizontal: 20,
+    
+  },
+  sectionCard: {
+    padding: 20,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 4 },
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.01,
+    shadowRadius: 6,
+    borderWidth: 0.4,
+    borderColor: '#000000',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -261,9 +335,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard',
   },
   quizActiveCard: {
-    backgroundColor: '#5B8BC7',
+    backgroundColor: '#468BD7',
     borderRadius: 20,
     padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 4 },
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.01,
+    shadowRadius: 6,
+    borderWidth: 0.4,
+    borderColor: '#000000',
   },
   quizActiveHeader: {
     marginBottom: 12,
@@ -272,6 +353,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#fff',
     fontFamily: 'Pretendard',
+    marginBottom: 4,
   },
   quizActiveTitle: {
     fontSize: 24,
@@ -294,16 +376,24 @@ const styles = StyleSheet.create({
   documentCard: {
     marginRight: 12,
     width: 100,
+    height: 140,
+    borderRadius: 12,
+    backgroundColor: '#468BD7',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   documentPreview: {
+    width: 80,
+    height: 90,
+    marginBottom: 6,
+  },
+  documentTitlePlaceholder: {
     width: 100,
-    height: 140,
-    backgroundColor: '#468BD7',
-    borderRadius: 12,
-    marginBottom: 8,
+    height: 29,
   },
   documentTitle: {
     fontSize: 12,
+    fontWeight: '600',
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'Pretendard',
