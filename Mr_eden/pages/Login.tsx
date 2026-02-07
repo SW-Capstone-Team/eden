@@ -49,7 +49,26 @@ function Login() {
         await AsyncStorage.setItem("savedId", displayName);
         console.log("아이디 저장됨:", displayName);
       }
-      loginWithId(displayName, password);
+      if (displayName == savedId && password == savedPassword) {
+        try {
+          await AsyncStorage.setItem("loggedInID", displayName);
+          navigation.navigate('MainStudent');
+        } catch (e) {
+          console.error('아이디 저장 실패:', e);
+        }
+      }
+
+      // 개발용 관리자 계정 임시로 추가요..
+      // 왜 저장 실패라고 뜨게 설정해놓은 거지? 로그인 실패?
+      if (displayName == "t" && password == "tt") {
+        try {
+          navigation.navigate('MainStudent');
+        } catch (e) {
+          console.error('아이디 저장 실패:', e);
+        }
+      }
+
+      console.log("로그인/회원가입 처리 (시뮬레이션):", displayName);
     } catch (e) {
       console.error(e);
     }
