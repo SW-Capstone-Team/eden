@@ -222,11 +222,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: '#393939',
+    borderColor: '#000000',
   },
   subjectItemExam: {
     backgroundColor: '#5B8BC7',
-    borderColor: '#468BD7',
+    borderColor: '#000000',
   },
   mainTextExam: {
     color: '#FFFFFF',

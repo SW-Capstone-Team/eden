@@ -23,11 +23,9 @@ type QuizItemProps = {
 };
 
 const QuizItem = ({ title, daysLeft, dueDate }: QuizItemProps) => (
-  <View style={styles.quizCard}>
-    <View style={styles.quizInfo}>
-      <Text style={styles.quizTitle}>{title}</Text>
-      <Text style={styles.quizDays}>{daysLeft}</Text>
-    </View>
+  <View style={styles.quizCardGrid}>
+    <Text style={styles.quizTitle}>{title}</Text>
+    <Text style={styles.quizDays}>{daysLeft}</Text>
     <Text style={styles.quizDate}>{dueDate}</Text>
   </View>
 );
@@ -178,9 +176,11 @@ export default function SubjectDetail() {
               </TouchableOpacity>
             </View>
             <View style={styles.whiteSection}>
-              <QuizItem title="쪽지시험" daysLeft="D-7" dueDate="25/09/30" />
-              <QuizItem title="중간고사" daysLeft="D-7" dueDate="25/10/07" />
-              <QuizItem title="단원평가" daysLeft="D-20" dueDate="25/10/20" />
+              <View style={styles.quizGrid}>
+                <QuizItem title="쪽지시험" daysLeft="D-7" dueDate="25/09/30" />
+                <QuizItem title="중간고사" daysLeft="D-7" dueDate="25/10/07" />
+                <QuizItem title="단원평가" daysLeft="D-20" dueDate="25/10/20" />
+              </View>
             </View>
           </View>
         </View>
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   documentPreview: {
     width: 80,
     height: 90,
-    marginBottom: 6,
+    marginBottom: 4,
   },
   documentTitlePlaceholder: {
     width: 100,
@@ -403,6 +403,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 16,
   },
+  quizGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    justifyContent: 'space-between',
+  },
   quizCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -411,6 +417,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginBottom: 8,
+  },
+  quizCardGrid: {
+    width: '48%',
+    backgroundColor: '#468BD7',
+    borderRadius: 16,
+    padding: 16,
+    minHeight: 100,
+    justifyContent: 'space-between',
   },
   quizInfo: {
     flex: 1,
