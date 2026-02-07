@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import accountJSON from '../account.json';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
+import supabase from "../supabaseClient";
 
 type CustomCheckboxProps = {
   value: boolean;
@@ -30,23 +30,18 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ value, onValueChange })
   );
 };
 
+export let ID = "";
+export let status = false;
+
 function Login() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [password, setPassword] = useState("");
   const [saveId, setSaveId] = useState(false);
-  const [savedId, setSavedId] = useState("");
-  const [savedPassword, setSavedPassword] = useState("");
 
   const toggleAccount = () => {
     navigation.navigate('Register');
   };
-
-  useEffect(() => {
-    const accountdata = JSON.parse(JSON.stringify(accountJSON));
-    setSavedId(accountdata.id);
-    setSavedPassword(accountdata.pw);
-  })
 
   const handleLogin = async () => {
     try {
@@ -54,19 +49,29 @@ function Login() {
         await AsyncStorage.setItem("savedId", displayName);
         console.log("아이디 저장됨:", displayName);
       }
-      if (displayName == savedId && password == savedPassword) {
-        try {
-          await AsyncStorage.setItem("loggedInID", displayName);
-          navigation.navigate('MainStudent');
-        } catch (e) {
-          console.error('아이디 저장 실패:', e);
-        }
-      }
-      console.log("로그인/회원가입 처리 (시뮬레이션):", displayName);
+      loginWithId(displayName, password);
     } catch (e) {
       console.error(e);
     }
   };
+
+  async function loginWithId(loginId: string, password: string) {
+    const { data: profile, error: queryError } = await supabase.from('profiles').select('email').eq('login_id', loginId).single();
+
+    if (queryError || !profile) {
+      throw new Error('존재하지 않는 ID입니다.');
+    }
+
+    const { data, error: loginError } = await supabase.auth.signInWithPassword({
+      email: profile.email,
+      password: password,
+    });
+
+    if(loginError) throw loginError;
+
+    console.log("로그인/회원가입 처리 (시뮬레이션): " + displayName);
+    navigation.navigate('MainStudent');
+  }
 
   useEffect(() => {
     (async () => {
@@ -77,6 +82,13 @@ function Login() {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    (() => {
+      ID = displayName;
+      status = saveId;
+    })();
+  }, [displayName, saveId]);
 
   return (
     <SafeAreaProvider style={styles.safearea}>
