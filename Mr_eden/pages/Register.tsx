@@ -12,16 +12,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import Ionicons from './module';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import supabase from '../supabaseClient';
-
-interface UserSignUp {
-  id: string;
-  password: string;
-  name: string;
-  email: string;
-  birthdate: string;
-  userType: '학생' | '교사';
-}
 
 export default function Register() {
   const [id, setId] = useState('');
@@ -32,48 +22,11 @@ export default function Register() {
   const [userType, setUserType] = useState<'학생' | '교사'>('학생');
 
   const handleSubmit = () => {
-    signUpUser({id, password, name, email, birthdate, userType});
+    // 회원가입 로직 구현
     console.log('회원가입:', { id, password, name, email, birthdate, userType });
   };
 
-  async function signUpUser(userData: UserSignUp) {
-    const { id, password, name, email, birthdate, userType } = userData;
-
-    try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if(authError) throw authError;
-      else console.log('successfully signed up: ', authData);
-
-      if(authData.user) {
-        try {
-          const { error: profileError } = await supabase.from('profiles').insert([
-            {
-              id: authData.user.id,
-              login_id: id,
-              email,
-              name,
-              birthdate,
-              user_type: userType
-            },
-          ]);
-    
-          if(profileError) throw profileError;
-          else console.log('successfully inserted in profiles table');
-        } catch(profileError) {
-          console.log(profileError);
-        }
-      }
-    } catch(authError) {
-      console.log(authError);
-    } finally {
-      navigation.navigate('Login');
-    }
-  }
-
+  
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
