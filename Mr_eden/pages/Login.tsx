@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import supabase from "../supabaseClient";
+// import supabase from "../supabaseClient";
 
 type CustomCheckboxProps = {
   value: boolean;
@@ -46,15 +46,24 @@ function Login() {
   const handleLogin = async () => {
     try {
       if (saveId && displayName) {
-        await AsyncStorage.setItem("savedId", displayName);
-        console.log("아이디 저장됨:", displayName);
+        try {
+          await AsyncStorage.setItem("savedId", displayName);
+          console.log("아이디 저장됨:", displayName);
+        } catch (e) {
+          console.error('아이디 저장 실패:', e);
+        }
       }
-      loginWithId(displayName, password);
+      // loginWithId(displayName, password);
+      if (displayName == 't' && password == 't123123') {
+        console.log("로그인/회원가입 처리 (시뮬레이션):", displayName);
+        navigation.navigate('MainStudent');
+      }
     } catch (e) {
       console.error(e);
     }
   };
 
+  /*
   async function loginWithId(loginId: string, password: string) {
     const { data: profile, error: queryError } = await supabase.from('profiles').select('email').eq('login_id', loginId).single();
 
@@ -72,6 +81,7 @@ function Login() {
     console.log("로그인/회원가입 처리 (시뮬레이션): " + displayName);
     navigation.navigate('MainStudent');
   }
+  */
 
   useEffect(() => {
     (async () => {

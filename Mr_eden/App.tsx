@@ -10,7 +10,7 @@ import Register from './pages/Register';
 import Settings from './pages/Settings';
 import ProfileSettings from './pages/ProfileSettings';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import supabase from "./supabaseClient";
+// import supabase from "./supabaseClient";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -25,6 +25,7 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  /*
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [prevLoggedIn, setprevLoggedIn] = useState(false);
 
@@ -66,7 +67,8 @@ export default function App() {
         }
       };
     }
-  })
+  });
+  */
 
   return (
     <NavigationContainer>
