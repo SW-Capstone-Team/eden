@@ -10,7 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import Ionicons from '@react-native-vector-icons/ionicons';
+import Ionicons from './module';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Register() {
