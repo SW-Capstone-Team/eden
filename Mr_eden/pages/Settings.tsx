@@ -121,27 +121,29 @@ export default function Settings() {
         </ScrollView>
 
         {/* Tab Bar */}
-        <View style={styles.tabBar}>
-          <TouchableOpacity 
-            style={styles.tabItem}
-            onPress={() => navigation.navigate('MainStudent')}
-          >
-            <Ionicons name="home-outline" size={24} color="#666" />
-            <Text style={[styles.tabText, styles.tabTextInactive]}>Home</Text>
-          </TouchableOpacity>
+        <View>
+          <SafeAreaView style={styles.tabBar} edges={['bottom']}>
+            <TouchableOpacity 
+              style={styles.tabItem}
+              onPress={() => navigation.navigate('MainStudent')}
+            >
+              <Ionicons name="home-outline" size={24} color="#666" />
+              <Text style={[styles.tabText, styles.tabTextInactive]}>Home</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={styles.tabItem}
-            onPress={() => navigation.navigate('SubjectMain')}
-          >
-            <Ionicons name="layers-outline" size={24} color="#666" />
-            <Text style={[styles.tabText, styles.tabTextInactive]}>Subject</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity style={styles.tabItem}>
-            <Ionicons name="settings-outline" size={24} color="#468BD7" />
-            <Text style={styles.tabText}>Setting</Text>
-          </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.tabItem}
+              onPress={() => navigation.navigate('SubjectMain')}
+            >
+              <Ionicons name="layers-outline" size={24} color="#666" />
+              <Text style={[styles.tabText, styles.tabTextInactive]}>Subject</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity style={styles.tabItem}>
+              <Ionicons name="settings-outline" size={24} color="#468BD7" />
+              <Text style={styles.tabText}>Setting</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

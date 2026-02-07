@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Modal, TextInput } from 'react-native';
-import { Ionicons } from '@react-native-vector-icons/ionicons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 type SubjectCardProps = {
   subject: string;
@@ -130,23 +130,25 @@ export default function SubjectMain() {
         </View>
       </Modal>
 
-      <View style={styles.tabBar}>
-        <TouchableOpacity 
-          style={styles.tabItem} 
-          onPress={() => handleTabPress('MainStudent')}
-        >
-          <Ionicons name="home-outline" size={24} color="#666" />
-          <Text style={styles.tabTextInactive}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Ionicons name="layers-outline" size={24} color="#468BD7" />
-          <Text style={styles.tabText}>Subject</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}
-        onPress={() => navigation.navigate('Settings')}>
-          <Ionicons name="settings-outline" size={24} color="#666" />
-          <Text style={styles.tabTextInactive}>Setting</Text>
-        </TouchableOpacity>
+      <View>
+        <SafeAreaView style={styles.tabBar} edges={['bottom']}>
+          <TouchableOpacity 
+            style={styles.tabItem} 
+            onPress={() => handleTabPress('MainStudent')}
+          >
+            <Ionicons name="home-outline" size={24} color="#666" />
+            <Text style={styles.tabTextInactive}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tabItem}>
+            <Ionicons name="layers-outline" size={24} color="#468BD7" />
+            <Text style={styles.tabText}>Subject</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tabItem}
+          onPress={() => navigation.navigate('Settings')}>
+            <Ionicons name="settings-outline" size={24} color="#666" />
+            <Text style={styles.tabTextInactive}>Setting</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
       </View>
     </SafeAreaProvider>
   );
