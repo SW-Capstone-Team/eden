@@ -11,9 +11,9 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import { Ionicons } from '@react-native-vector-icons/ionicons';
+import Ionicons from './module';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import supabase from '../supabaseClient';
+// import supabase from '../supabaseClient';
 
 interface UserSignUp {
   id: string;
@@ -33,10 +33,11 @@ export default function Register() {
   const [userType, setUserType] = useState<'학생' | '교사'>('학생');
 
   const handleSubmit = () => {
-    signUpUser({id, password, name, email, birthdate, userType});
+    // signUpUser({id, password, name, email, birthdate, userType});
     console.log('회원가입:', { id, password, name, email, birthdate, userType });
   };
 
+  /*
   async function signUpUser(userData: UserSignUp) {
     const { id, password, name, email, birthdate, userType } = userData;
 
@@ -74,6 +75,7 @@ export default function Register() {
       navigation.navigate('Login');
     }
   }
+  */
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
