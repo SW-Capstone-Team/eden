@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Modal, TextInput } from 'react-native';
-import Ionicons from '@react-native-vector-icons/ionicons';
+import Ionicons from './module';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
@@ -87,7 +87,10 @@ export default function SubjectMain() {
           style={styles.addClassButton}
           onPress={() => setModalVisible(true)}
         >
-          <Text style={styles.addClassText}>➕ 수업 참여</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <Image source={require('../assets/addClassIcon.png')} style={{width: 20, height: 20, marginRight: 8}} />
+            <Text style={styles.addClassText}>수업 참여</Text>
+          </View>
         </TouchableOpacity>
       </ScrollView>
 
@@ -185,17 +188,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 28,
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#468BD7',
+    borderWidth: 0.4,
+    borderColor: '#000000',
     overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOffset: { width: 2, height: 4 },
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.01,
     shadowRadius: 6,
     elevation: 4,
   },
   subjectCardTop: {
-    backgroundColor: '#5B8BC7',
+    backgroundColor: '#468BD7',
     padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -226,7 +230,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard',
   },
   addClassButton: {
-    padding: 15,
+    padding: 10,
     marginHorizontal: 60,
     borderRadius: 30,
     borderWidth: 0.7,
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   addClassText: {
-    color: '#666',
+    color: '#000000',
     fontSize: 16,
   },
   modalOverlay: {
