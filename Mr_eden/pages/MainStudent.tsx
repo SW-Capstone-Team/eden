@@ -1,14 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Animated } from 'react-native';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from './module';
-
-// Ionicons.loadFont();
-
 
 type SubjectItemProps = {
   subject: string;
@@ -129,7 +125,7 @@ export default function MainStudent() {
       </Animated.ScrollView>
 
       <View>
-        <SafeAreaView style={styles.tabBar} edges={['bottom']} >
+        <SafeAreaView style={styles.tabBar} edges={['bottom']}>
           <TouchableOpacity style={styles.tabItem}>
             <Ionicons name="home-outline" size={24} color="#468BD7" />
             <Text style={styles.tabText}>Home</Text>
@@ -150,7 +146,7 @@ export default function MainStudent() {
             <Ionicons name="settings-outline" size={24} color="#666" />
             <Text style={[styles.tabText, styles.tabTextInactive]}>Setting</Text>
           </TouchableOpacity>
-        </SafeAreaView>  
+        </SafeAreaView>
       </View>
     </SafeAreaProvider>
   );
