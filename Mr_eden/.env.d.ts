@@ -1,4 +1,4 @@
 declare module '@env' {
-    export const SB_URL: string;
-    export const SB_KEY: string;
+    export const API_AOS: string;
+    export const API_IOS: string;
 }
