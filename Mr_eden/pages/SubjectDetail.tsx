@@ -18,15 +18,17 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 type QuizItemProps = {
   title: string;
-  daysLeft: string;
+  time: string;
   dueDate: string;
 };
 
-const QuizItem = ({ title, daysLeft, dueDate }: QuizItemProps) => (
+const QuizItem = ({ title, time, dueDate }: QuizItemProps) => (
   <View style={styles.quizCardGrid}>
     <Text style={styles.quizTitle}>{title}</Text>
-    <Text style={styles.quizDays}>{daysLeft}</Text>
-    <Text style={styles.quizDate}>{dueDate}</Text>
+    <View style={styles.quizCardFooter}>
+      <Text style={styles.quizDate}>{dueDate}</Text>
+      <Text style={styles.quizTime}>{time}</Text>
+    </View>
   </View>
 );
 
@@ -177,9 +179,9 @@ export default function SubjectDetail() {
             </View>
             <View style={styles.whiteSection}>
               <View style={styles.quizGrid}>
-                <QuizItem title="쪽지시험" daysLeft="D-7" dueDate="25/09/30" />
-                <QuizItem title="중간고사" daysLeft="D-7" dueDate="25/10/07" />
-                <QuizItem title="단원평가" daysLeft="D-20" dueDate="25/10/20" />
+                <QuizItem title="쪽지시험" time="11:30" dueDate="25/09/30" />
+                <QuizItem title="중간고사" time="09:30" dueDate="25/10/07" />
+                <QuizItem title="단원평가" time="13:30" dueDate="25/10/20" />
               </View>
             </View>
           </View>
@@ -401,12 +403,11 @@ const styles = StyleSheet.create({
   whiteSection: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 16,
   },
   quizGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: 11,
     justifyContent: 'space-between',
   },
   quizCard: {
@@ -414,17 +415,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#468BD7',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 8,
+    borderRadius: 20,
+    padding: 10,
   },
   quizCardGrid: {
     width: '48%',
     backgroundColor: '#468BD7',
-    borderRadius: 16,
-    padding: 16,
-    minHeight: 100,
+    borderRadius: 20,
+    padding: 15,
+    height: 85,
     justifyContent: 'space-between',
+  },
+  quizCardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   quizInfo: {
     flex: 1,
@@ -433,7 +438,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#fff',
-    marginBottom: 4,
+    fontFamily: 'Pretendard',
+  },
+  quizTime: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#fff',
     fontFamily: 'Pretendard',
   },
   quizDays: {
@@ -451,15 +461,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#468BD7',
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 16,
-    marginBottom: 8,
+    marginBottom: 11,
   },
   assignmentInfo: {
     flex: 1,
   },
   assignmentTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500',
     color: '#fff',
     marginBottom: 4,

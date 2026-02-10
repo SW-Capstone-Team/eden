@@ -61,7 +61,7 @@ export default function SubjectMain() {
                 <Image source={require('../assets/hanyang.png')} style={{width: 25, height: 25}} />
                 <Text style={styles.headerText}>한양중학교</Text>
               </View>
-              <Text style={styles.headerText}>김하늘 님</Text>
+              <Text style={styles.headerText}>김하냥 님</Text>
             </View>
 
       <ScrollView style={styles.subjectList}>
