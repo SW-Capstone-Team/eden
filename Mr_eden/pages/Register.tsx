@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -7,13 +7,15 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import { Ionicons } from '@react-native-vector-icons/ionicons';
+import Ionicons from './module';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import supabase from '../supabaseClient';
+import API_URL from '../config';
+import axios from "axios";
 
 interface UserSignUp {
   id: string;
@@ -33,47 +35,29 @@ export default function Register() {
   const [userType, setUserType] = useState<'학생' | '교사'>('학생');
 
   const handleSubmit = () => {
-    signUpUser({id, password, name, email, birthdate, userType});
+    // signUpUser({id, password, name, email, birthdate, userType});
     console.log('회원가입:', { id, password, name, email, birthdate, userType });
   };
-
-  async function signUpUser(userData: UserSignUp) {
-    const { id, password, name, email, birthdate, userType } = userData;
-
+  
+  /*
+  const signUpUser = useCallback(async () => {
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
+      await axios.post(`${API_URL}/api/auth/register`, {
+        "id": `${id}`,
+        "password": `${password}`,
+        "name": `${name}`,
+        "email": `${email}`,
+        "birthdate": `${birthdate}`,
+        "userType": `${userType}`,
       });
-
-      if(authError) throw authError;
-      else console.log('successfully signed up: ', authData);
-
-      if(authData.user) {
-        try {
-          const { error: profileError } = await supabase.from('profiles').insert([
-            {
-              id: authData.user.id,
-              login_id: id,
-              email,
-              name,
-              birthdate,
-              user_type: userType
-            },
-          ]);
-    
-          if(profileError) throw profileError;
-          else console.log('successfully inserted in profiles table');
-        } catch(profileError) {
-          console.log(profileError);
-        }
+    } catch (error) {
+      const errorRes = (error as AxiosError).response;
+      if(errorRes) {
+        Alert.alert('알림', errorRes.data.message);
       }
-    } catch(authError) {
-      console.log(authError);
-    } finally {
-      navigation.navigate('Login');
     }
-  }
+  }, [id, password, name, email, birthdate, userType, password]);
+  */
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
