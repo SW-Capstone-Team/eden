@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-// import supabase from "../supabaseClient";
+import API_URL from "../config";
+import axios from "axios";
 
 type CustomCheckboxProps = {
   value: boolean;
@@ -64,23 +65,19 @@ function Login() {
   };
 
   /*
-  async function loginWithId(loginId: string, password: string) {
-    const { data: profile, error: queryError } = await supabase.from('profiles').select('email').eq('login_id', loginId).single();
-
-    if (queryError || !profile) {
-      throw new Error('존재하지 않는 ID입니다.');
+  const loginWithId = useCallback(async () => {
+    try {
+      await axios.post(`${API_URL}/api/auth/login`, {
+        "id": `${displayName}`,
+        "password": `${password}`
+      });
+    } catch (error) {
+      const errorRes = (error as AxiosError).response;
+      if(errorRes) {
+        Alert.alert('알림', errorRes.data.message);
+      }
     }
-
-    const { data, error: loginError } = await supabase.auth.signInWithPassword({
-      email: profile.email,
-      password: password,
-    });
-
-    if(loginError) throw loginError;
-
-    console.log("로그인/회원가입 처리 (시뮬레이션): " + displayName);
-    navigation.navigate('MainStudent');
-  }
+  }, [displayName, password]);
   */
 
   useEffect(() => {

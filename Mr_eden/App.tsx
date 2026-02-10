@@ -1,4 +1,3 @@
-import 'react-native-url-polyfill/auto';
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,7 +9,7 @@ import Register from './pages/Register';
 import Settings from './pages/Settings';
 import ProfileSettings from './pages/ProfileSettings';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import supabase from "./supabaseClient";
+import axios from "axios";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -25,10 +24,11 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  /*
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [prevLoggedIn, setprevLoggedIn] = useState(false);
 
+  // 수정 필요(여긴 무조건, 나머진 임시로 처리)
+  /*
   const getId = async () => {
     const { data, error } = await supabase.auth.getSession();
     if(error) {
@@ -67,7 +67,7 @@ export default function App() {
         }
       };
     }
-  });
+  }, [isLoggedIn, prevLoggedIn]);
   */
 
   return (
