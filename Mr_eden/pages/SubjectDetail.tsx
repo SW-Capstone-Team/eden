@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
   whiteSection: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 16,
+    padding: 8,
   },
   quizGrid: {
     flexDirection: 'row',
