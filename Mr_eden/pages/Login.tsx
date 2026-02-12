@@ -44,6 +44,10 @@ function Login() {
     navigation.navigate('Register');
   };
 
+  const findAccount = () => {
+    navigation.navigate('FindAccount');
+  }
+
   const handleLogin = async () => {
     try {
       if (saveId && displayName) {
@@ -133,12 +137,13 @@ function Login() {
         <Text style={styles.switchText} onPress={toggleAccount}>회원가입</Text>
       </View>
 
-      <View style={styles.tabview}>
-        <TouchableOpacity style={styles.tab} onPress={handleLogin}>
-          <Text style={styles.tabText}>로그인</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.switchText}>계정을 잃어버리셨나요?</Text>
+      <TouchableOpacity style={styles.tab} onPress={handleLogin}>
+        <Text style={styles.tabText}>로그인</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity onPress={findAccount}>
+        <Text style={styles.switchText}>계정을 잃어버리셨나요?</Text>
+      </TouchableOpacity>
       
       <StatusBar barStyle="dark-content" backgroundColor={"transparent"} translucent={true} />
     </SafeAreaProvider>
@@ -153,7 +158,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAFDFE", 
     gap: 20
   },
-  input: { 
+  input: {
+    flexDirection: 'row',
     borderWidth: 0.5, 
     borderRadius: 35, 
     borderColor: "#000000",
@@ -198,11 +204,6 @@ const styles = StyleSheet.create({
     fontWeight: "600", 
     color: "#393939", 
     marginLeft: 10, 
-  },
-  tabview: { 
-    flexDirection: "row", 
-    alignItems: "center", 
-    justifyContent: "space-between", 
   },
   tab: { 
     backgroundColor: "#468BD7",
