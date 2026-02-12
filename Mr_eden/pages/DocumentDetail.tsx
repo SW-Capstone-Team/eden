@@ -13,18 +13,25 @@ type MaterialItemProps = {
   uploadTime: string;
 };
 
-const MaterialItem = ({ title, uploadDate, uploadTime }: MaterialItemProps) => (
-  <TouchableOpacity style={styles.materialCard}>
-    <Image 
-      source={require('../assets/study_document.png')} 
-      style={styles.documentThumbnail} 
-    />
-    <View style={styles.materialInfo}>
-      <Text style={styles.materialTitle}>{title}</Text>
-      <Text style={styles.uploadInfo}>{uploadDate} {uploadTime} 에 업로드됨</Text>
-    </View>
-  </TouchableOpacity>
-);
+const MaterialItem = ({ title, uploadDate, uploadTime }: MaterialItemProps) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  
+  return (
+    <TouchableOpacity 
+      style={styles.materialCard}
+      onPress={() => navigation.navigate('DocumentDetailView')}
+    >
+      <Image 
+        source={require('../assets/study_document.png')} 
+        style={styles.documentThumbnail} 
+      />
+      <View style={styles.materialInfo}>
+        <Text style={styles.materialTitle}>{title}</Text>
+        <Text style={styles.uploadInfo}>last update: {uploadDate} {uploadTime}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 export default function DocumentDetail() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -40,8 +47,8 @@ export default function DocumentDetail() {
           >
             <Ionicons name="chevron-back" size={32} color="#333" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>학습 자료 목록</Text>
         </View>
+        <Text style={styles.headerTitle}>학습 자료 목록</Text>
       </View>
 
       <ScrollView 
@@ -106,12 +113,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#000',
     fontFamily: 'Pretendard',
+    marginLeft: 10,
+    marginTop: 10,
   },
   materialCard: {
     flexDirection: 'row',
     backgroundColor: '#468BD7',
     borderRadius: 20,
-    padding: 16,
+    padding: 10,
     marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 4 },
@@ -122,7 +131,7 @@ const styles = StyleSheet.create({
   },
   documentThumbnail: {
     width: 90,
-    height: 110,
+    height: 90,
     borderRadius: 8,
     backgroundColor: '#fff',
   },
@@ -135,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: 40,
     fontFamily: 'Pretendard',
   },
   uploadInfo: {
