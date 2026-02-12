@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-// import supabase from "../supabaseClient";
+import API_URL from "../config";
+import axios from "axios";
 
 type CustomCheckboxProps = {
   value: boolean;
@@ -43,6 +44,10 @@ function Login() {
     navigation.navigate('Register');
   };
 
+  const findAccount = () => {
+    navigation.navigate('FindAccount');
+  }
+
   const handleLogin = async () => {
     try {
       if (saveId && displayName) {
@@ -64,23 +69,19 @@ function Login() {
   };
 
   /*
-  async function loginWithId(loginId: string, password: string) {
-    const { data: profile, error: queryError } = await supabase.from('profiles').select('email').eq('login_id', loginId).single();
-
-    if (queryError || !profile) {
-      throw new Error('존재하지 않는 ID입니다.');
+  const loginWithId = useCallback(async () => {
+    try {
+      await axios.post(`${API_URL}/api/auth/login`, {
+        "id": `${displayName}`,
+        "password": `${password}`
+      });
+    } catch (error) {
+      const errorRes = (error as AxiosError).response;
+      if(errorRes) {
+        Alert.alert('알림', errorRes.data.message);
+      }
     }
-
-    const { data, error: loginError } = await supabase.auth.signInWithPassword({
-      email: profile.email,
-      password: password,
-    });
-
-    if(loginError) throw loginError;
-
-    console.log("로그인/회원가입 처리 (시뮬레이션): " + displayName);
-    navigation.navigate('MainStudent');
-  }
+  }, [displayName, password]);
   */
 
   useEffect(() => {
@@ -101,102 +102,77 @@ function Login() {
   }, [displayName, saveId]);
 
   return (
-    <SafeAreaProvider style={styles.safearea}>
-      <View style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
 
-        <View style={styles.imageview}>
-          <Image 
-            source={require("../assets/logo.png")}
-            style={styles.logoimage}
-          />
+      <Image style={{marginBottom: 10}} source={require("../assets/logo.png")}/>
+
+      <TextInput
+        placeholder="ID"
+        placeholderTextColor="#B7B7B7"
+        style={styles.input}
+        autoCapitalize="none"
+        value={displayName}
+        onChangeText={setDisplayName}
+        autoCorrect={false}
+      />
+
+      <TextInput
+        placeholder="PASSWORD"
+        placeholderTextColor="#B7B7B7"
+        style={styles.input}
+        autoCapitalize="none"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
+        textContentType="password"
+        autoCorrect={false}
+      />
+
+      <View style={styles.checkboxAndSwitchRow}>
+        <View style={styles.checkboxRow}>
+          <CustomCheckbox value={saveId} onValueChange={setSaveId} />
+          <Text style={styles.checkboxLabel}>아이디 저장</Text>
         </View>
 
-        <View style={styles.inputWrapper}>
-          <TextInput
-            placeholder="ID"
-            placeholderTextColor="#B7B7B7"
-            style={styles.input}
-            autoCapitalize="none"
-            value={displayName}
-            onChangeText={setDisplayName}
-            autoCorrect={false}
-          />
-
-          <TextInput
-            placeholder="PASSWORD"
-            placeholderTextColor="#B7B7B7"
-            style={styles.input}
-            autoCapitalize="none"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-            textContentType="password"
-            autoCorrect={false}
-          />
-        </View>
-
-        <View style={styles.checkboxAndSwitchRow}>
-          <View style={styles.checkboxRow}>
-            <CustomCheckbox value={saveId} onValueChange={setSaveId} />
-            <Text style={styles.checkboxLabel}>아이디 저장</Text>
-          </View>
-
-          <Text style={styles.switchText} onPress={toggleAccount}>회원가입</Text>
-        </View>
-
-        <View style={styles.tabview}>
-          <TouchableOpacity style={styles.tab} onPress={handleLogin}>
-            <Text style={styles.tabText}>로그인</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.switchText}>계정을 잃어버리셨나요?</Text>
+        <Text style={styles.switchText} onPress={toggleAccount}>회원가입</Text>
       </View>
+
+      <TouchableOpacity style={styles.tab} onPress={handleLogin}>
+        <Text style={styles.tabText}>로그인</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity onPress={findAccount}>
+        <Text style={styles.switchText}>계정을 잃어버리셨나요?</Text>
+      </TouchableOpacity>
+      
       <StatusBar barStyle="dark-content" backgroundColor={"transparent"} translucent={true} />
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  safearea: { 
-    flex: 1, 
-  },
   container: { 
-    flex: 1, 
-    paddingVertical: 30, 
+    flex: 1,
+    paddingTop: 200,
     paddingHorizontal: 40, 
-    backgroundColor: "#FDFEFF", 
+    backgroundColor: "#FAFDFE", 
+    gap: 20
   },
-  imageview: {
-    marginTop: 180, 
-    flexDirection: "row", 
-  },
-  logoimage: { 
-    alignItems: "center", 
-    marginLeft: "auto", 
-    marginRight: "auto", 
-  },
-
-  inputWrapper: { 
-    paddingVertical: 15, 
-  },
-  input: { 
+  input: {
+    flexDirection: 'row',
     borderWidth: 0.5, 
     borderRadius: 35, 
     borderColor: "#000000",
-    paddingVertical: 10, 
-    paddingHorizontal: 30, 
+    paddingHorizontal: 20, 
     color: "#393939",
     fontWeight: "600",
     fontSize: 24,
-    lineHeight: 50,
-    marginTop: 20, 
+    height: 70, 
   },
 
   checkboxAndSwitchRow: {
-    flexDirection: "row", 
-    alignItems: "center", 
+    flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
   },
   checkboxRow: { 
     flexDirection: "row", 
@@ -204,8 +180,8 @@ const styles = StyleSheet.create({
   },
 
   checkboxBox: { 
-    width: 22, 
-    height: 22, 
+    width: 20, 
+    height: 20, 
     borderRadius: 5, 
     borderWidth: 0.5, 
     borderColor: "#000000", 
@@ -221,29 +197,21 @@ const styles = StyleSheet.create({
   checkMark: { 
     color: "#ffffff", 
     fontSize: 18, 
-    lineHeight: 20, 
+    lineHeight: 20,
   },
   checkboxLabel: { 
     fontSize: 18,
-    fontFamily: 'Pretendard',
-    fontWeight: "semibold", 
+    fontWeight: "600", 
     color: "#393939", 
-    marginLeft: 8, 
-  },
-  tabview: { 
-    flexDirection: "row", 
-    alignItems: "center", 
-    justifyContent: "space-between", 
+    marginLeft: 10, 
   },
   tab: { 
-    backgroundColor: "#468BD7", 
-    paddingHorizontal: 20, 
-    paddingVertical: 15, 
-    borderRadius: 50, 
+    backgroundColor: "#468BD7",
+    borderRadius: 35, 
     alignItems: "center", 
     justifyContent: "center", 
-    width: "100%", 
-    marginBottom: 10, 
+    width: "100%",
+    height: 70,
   },
   tabText: { 
     fontWeight: "600", 
@@ -252,8 +220,6 @@ const styles = StyleSheet.create({
   },
   switchText: { 
     textAlign: 'center',
-    paddingHorizontal: 8, 
-    paddingVertical: 6, 
     fontWeight: "600",
     fontSize: 18,
     color: "#393939", 

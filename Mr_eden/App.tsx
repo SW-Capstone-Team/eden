@@ -1,8 +1,8 @@
-import 'react-native-url-polyfill/auto';
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login, { ID, status } from './pages/Login';
+import FindAccount from './pages/FindAccount';
 import MainStudent from './pages/MainStudent';
 import SubjectMain from './pages/SubjectMain';
 import SubjectDetail from './pages/SubjectDetail';
@@ -12,11 +12,12 @@ import ProfileSettings from './pages/ProfileSettings';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DocumentDetail from './pages/DocumentDetail';
 import DocumentDetailView from './pages/DocumentDetailView';
-// import supabase from "./supabaseClient";
+import axios from "axios";
 
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
+  FindAccount: undefined;
   MainStudent: undefined;
   SubjectMain: undefined;
   SubjectDetail: undefined;
@@ -29,10 +30,11 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
-  /*
   const [isLoggedIn, setisLoggedIn] = useState(false);
   const [prevLoggedIn, setprevLoggedIn] = useState(false);
 
+  // 수정 필요(여긴 무조건, 나머진 임시로 처리)
+  /*
   const getId = async () => {
     const { data, error } = await supabase.auth.getSession();
     if(error) {
@@ -71,7 +73,7 @@ export default function App() {
         }
       };
     }
-  });
+  }, [isLoggedIn, prevLoggedIn]);
   */
 
   return (
@@ -83,9 +85,14 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ headerShown: false }}
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FindAccount"
+          component={FindAccount}
+          options={{ headerShown: false }}
         />
         <Stack.Screen 
           name="MainStudent" 
