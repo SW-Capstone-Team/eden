@@ -63,31 +63,30 @@ export default function Register() {
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <View style = {styles.back}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          ><Ionicons name="chevron-back" size={40} color="#000" />
-          </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={{marginTop: 40}}
+        onPress={() => navigation.goBack()}
+        ><Ionicons name="chevron-back" size={40} color="#000" />
+      </TouchableOpacity>
       
       <View style={styles.typeSelector}>
         <TouchableOpacity 
-          style={[styles.typeButton, {flex: 1}, userType === '학생' && styles.selectedType]}
+          style={[styles.typeButton, userType === '학생' && styles.selectedType]}
           onPress={() => setUserType('학생')}
-        ><Image style={{marginHorizontal: 10}} source={require("../assets/backpack.png")} />
+          ><Image style={{margin: 10}} source={require("../assets/backpack.png")} />
           <Text style={[styles.typeText, userType === '학생' && styles.selectedTypeText]}>학생</Text>
         </TouchableOpacity>
+
         <TouchableOpacity 
-          style={[styles.typeButton, {flex: 1, marginLeft: 20}, userType === '교사' && styles.selectedType]}
+          style={[styles.typeButton, userType === '교사' && styles.selectedType]}
           onPress={() => setUserType('교사')}
-        ><Image style={{marginHorizontal: 10}} source={require("../assets/chalkboard-user.png")} />
+          ><Image style={{margin: 10}} source={require("../assets/chalkboard-user.png")} />
           <Text style={[styles.typeText, userType === '교사' && styles.selectedTypeText]}>교사</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.inputContainer}>
         <Text style={styles.itemText}>아이디 입력</Text>
-        <View style={{flexDirection: 'row', gap: 10}}>
+        <View style={styles.rowinputs}>
           <TextInput
             style={styles.input}
             placeholder="6~20자"
@@ -124,28 +123,30 @@ export default function Register() {
           onChangeText={setName}
         />
         <Text style={styles.itemText}>소속학교</Text>
+        <View style={styles.input}>
         <TextInput
-          style={styles.input}
+          style={[styles.itemText, {padding: 0}]}
           placeholder="학교 이름을 입력하세요"
           placeholderTextColor='#B7B7B7'
-        >
-        </TextInput>
+        ></TextInput>
+        <TouchableOpacity><Image style={{marginTop: 2, marginRight: 10}} source={require("../assets/search.png")}/></TouchableOpacity>
+        </View>
         <Text style={styles.itemText}>생년월일</Text>
-        <View style={styles.dateInputs}>
+        <View style={styles.rowinputs}>
           <TextInput
-            style={[styles.input, {width: 142}]}
+            style={[styles.input, {flex: 0, width: 142}]}
             placeholder="년도"
             placeholderTextColor='#B7B7B7'
             value={birthdate}
             onChangeText={setBirthdate}
           />
           <TextInput
-            style={[styles.input, {width: 80}]}
+            style={styles.input}
             placeholder="월"
             placeholderTextColor='#B7B7B7'
           />
           <TextInput
-            style={[styles.input, {width: 80}]}
+            style={styles.input}
             placeholder="일"
             placeholderTextColor='#B7B7B7'
           />
@@ -153,25 +154,25 @@ export default function Register() {
         <Text style={styles.itemText}>이메일 주소</Text>
         <View style={{flexDirection: 'row'}}>
           <TextInput
-            style={[styles.input, {width: 141}]}
+            style={styles.input}
             placeholder="이메일 주소"
             placeholderTextColor='#B7B7B7'
             value={email}
             onChangeText={setEmail}
           />
-          <Text style={{margin: 10, fontSize: 20}}>@</Text>
+          <Text style={{paddingHorizontal: 10, paddingTop: 15, fontSize: 20}}>@</Text>
           <TextInput
-            style={[styles.input, {width: 141}]}
-            placeholder=".com"
+            style={styles.input}
+            placeholder="naver.com"
             placeholderTextColor='#B7B7B7'
           />
         </View>
-        <View style={{flexDirection: 'row', marginTop: 10, gap: 10}}>
-          <TouchableOpacity style={[styles.proveButton]}>
+        <View style={styles.rowinputs}>
+          <TouchableOpacity style={styles.proveButton}>
           <Text style={styles.proveText}>인증요청</Text>
           </TouchableOpacity>
           <TextInput
-            style={[styles.input]}
+            style={styles.input}
             placeholder="인증번호 입력"
             placeholderTextColor='#B7B7B7'
            />
@@ -189,18 +190,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFDFE',
-    padding: 20,
+    paddingHorizontal: 20,
     fontFamily: 'Pretendard'
-  },
-  back: {
-    marginVertical: 20,
   },
   typeSelector: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    gap: 20
   },
   typeButton: {
-    padding: 10,
+    flex: 1,
+    paddingHorizontal: 10,
+    marginVertical: 20,
+    height: 40,
     flexDirection: 'row',
     borderRadius: 35,
     borderWidth: 0.5,
@@ -211,7 +213,8 @@ const styles = StyleSheet.create({
     borderColor: '#468BD7',
   },
   typeText: {
-    fontSize: 16,
+    paddingTop: 8,
+    fontSize: 15,
     color: '#000',
     fontWeight: '600'
   },
@@ -219,41 +222,44 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   inputContainer: {
-    paddingTop: 10,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   itemText: {
     fontSize: 18,
     fontWeight: '600',
-    marginVertical: 10
   },
   input: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 40,
     borderWidth: 0.7,
     borderRadius: 35,
     borderColor: '#000000',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginBottom: 10,
+    paddingVertical: 7,
+    paddingLeft: 20,
+    marginTop: 10,
+    marginBottom: 20,
     fontSize: 18,
     color: '#393939',
     fontWeight: '600'
   },
-  dateInputs: {
+  rowinputs: {
     flexDirection: 'row',
     gap: 10,
   },
   proveButton: {
+    height: 40,
+    marginVertical: 10,
     backgroundColor: '#468BD7',
     borderRadius: 35,
     alignItems: 'center',
-    marginBottom: 10,
     width: 100
   },
   proveText: {
     color: '#fff',
     fontSize: 18,
-    padding: 10,
+    padding: 5,
     fontWeight: '600'
   },
   submitButton: {
@@ -261,8 +267,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 50,
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20,
+    marginVertical: 10,
   },
   submitButtonText: {
     color: '#FFFFFF',

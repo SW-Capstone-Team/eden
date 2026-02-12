@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login, { ID, status } from './pages/Login';
+import FindAccount from './pages/FindAccount';
 import MainStudent from './pages/MainStudent';
 import SubjectMain from './pages/SubjectMain';
 import SubjectDetail from './pages/SubjectDetail';
@@ -14,6 +15,7 @@ import axios from "axios";
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
+  FindAccount: undefined;
   MainStudent: undefined;
   SubjectMain: undefined;
   SubjectDetail: undefined;
@@ -79,9 +81,14 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{ headerShown: false }}
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FindAccount"
+          component={FindAccount}
+          options={{ headerShown: false }}
         />
         <Stack.Screen 
           name="MainStudent" 
