@@ -488,6 +488,104 @@ Response:
 }
 ```
 
+## 4. 설정 API
+
+### 4.1. 유저 아이콘 조회
+```
+POST /api/setting/renderUserIcon
+Request:
+{
+    "token": string,
+}
+Response:
+{
+    "userIcon": image
+}
+```
+
+### 4.2. 유저 아이콘 변경
+```
+POST /api/setting/changeUserIcon
+Request:
+{
+    "token": string,
+    "newUserIcon": image
+}
+Response:
+{
+    "success": boolean,
+    "message": string
+}
+```
+
+### 4.3. 유저 이름 변경
+```
+POST /api/setting/changeUserName
+Request:
+{
+    "token": string,
+    "newUserName": string
+}
+Response:
+{
+    "success": boolean,
+    "message": string
+}
+```
+
+### 4.4. 유저 소속학교 변경
+```
+POST /api/setting/changeUserSchool
+Request:
+{
+    "token": string,
+    "newSchoolName": string
+}
+Response:
+{
+    "success": boolean,
+    "message": string
+}
+```
+
+### 4.5. 계정탈퇴
+```
+POST /api/setting/closeAccount
+Request:
+{
+    "token": string
+}
+Response:
+{
+    "success": boolean,
+    "message": string
+}
+```
+
+### 4.6. 고객센터 
+```
+POST /api/setting/counselClient
+Request:
+{
+    "token": string
+    "inquiry": string
+}
+Response:
+{
+    "success": boolean,
+    "message": string
+}
+```
+
+### 4.7. 고객센터 
+```
+POST /api/setting/answerInquiry
+Response:
+{
+    "answer": string
+}
+```
+
 ## 인증 헤더
 
 Protected API 호출 시 필요한 인증 헤더

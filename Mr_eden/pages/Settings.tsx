@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import TabBar from '../components/TabBar';
 
 type MenuItemProps = {
   title: string;
@@ -120,31 +121,7 @@ export default function Settings() {
           </MenuSection>
         </ScrollView>
 
-        {/* Tab Bar */}
-        <View>
-          <SafeAreaView style={styles.tabBar} edges={['bottom']}>
-            <TouchableOpacity 
-              style={styles.tabItem}
-              onPress={() => navigation.navigate('MainStudent')}
-            >
-              <Ionicons name="home-outline" size={24} color="#666" />
-              <Text style={[styles.tabText, styles.tabTextInactive]}>Home</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.tabItem}
-              onPress={() => navigation.navigate('SubjectMain')}
-            >
-              <Ionicons name="layers-outline" size={24} color="#666" />
-              <Text style={[styles.tabText, styles.tabTextInactive]}>Subject</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.tabItem}>
-              <Ionicons name="settings-outline" size={24} color="#468BD7" />
-              <Text style={styles.tabText}>Setting</Text>
-            </TouchableOpacity>
-          </SafeAreaView>
-        </View>
+        <TabBar activeTab="settings" />
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -226,24 +203,5 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     marginHorizontal: 20,
-  },
-  tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#EEEEEE',
-  },
-  tabItem: {
-    alignItems: 'center',
-  },
-  tabText: {
-    fontSize: 12,
-    marginTop: 4,
-    color: '#468BD7',
-    fontFamily: 'Pretendard',
-  },
-  tabTextInactive: {
-    color: '#666',
   },
 });

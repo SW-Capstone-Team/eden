@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from './module';
+import TabBar from '../components/TabBar';
 
 type SubjectItemProps = {
   subject: string;
@@ -124,30 +125,7 @@ export default function MainStudent() {
         <SubjectItem subject="기하와 백터" time="D-13" class="중단원 문제 풀이 과제" />
       </Animated.ScrollView>
 
-      <View>
-        <SafeAreaView style={styles.tabBar} edges={['bottom']}>
-          <TouchableOpacity style={styles.tabItem}>
-            <Ionicons name="home-outline" size={24} color="#468BD7" />
-            <Text style={styles.tabText}>Home</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            style={styles.tabItem} 
-            onPress={() => navigation.navigate('SubjectMain')}
-          >
-            <Ionicons name="layers-outline" size={24} color="#666" />
-            <Text style={[styles.tabText, styles.tabTextInactive]}>Subject</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={styles.tabItem}
-            onPress={() => navigation.navigate('Settings')}
-          >
-            <Ionicons name="settings-outline" size={24} color="#666" />
-            <Text style={[styles.tabText, styles.tabTextInactive]}>Setting</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </View>
+      <TabBar activeTab="home" />
     </SafeAreaProvider>
   );
 }

@@ -1,20 +1,11 @@
 import React, { useState, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Animated,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image,Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// Ionicons.loadFont();
 import Ionicons from './module';
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import TabBar from '../components/TabBar';
 
 type QuizItemProps = {
   title: string;
@@ -51,6 +42,8 @@ const AssignmentItem = ({ title, daysLeft, time, dueDate }: AssignmentItemProps)
     </View>
   </View>
 );
+
+const currentUserScore = 75.34;
 
 export default function SubjectDetail() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -131,7 +124,7 @@ export default function SubjectDetail() {
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>학습 자료</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('DocumentDetail')}>
                 <Text style={styles.seeMore}>모두보기</Text>
               </TouchableOpacity>
             </View>
@@ -222,19 +215,22 @@ export default function SubjectDetail() {
         {/* 현재 성적 */}
         <View style={styles.section}>
           <View style={styles.scoreSection}>
-            <View style={styles.scoreHeader}>
-              <Text style={styles.scoreTitle}>현재 성적 (제출된 퀴즈 평균 포함)</Text>
-              <TouchableOpacity style={styles.lectureButton}>
-                <Text style={styles.lectureButtonText}>강</Text>
-              </TouchableOpacity>
+            <View style={styles.gradientOverlay} />
+            <View style={styles.scoreContent}>
+              <View style={styles.scoreHeader}>
+                <Text style={styles.scoreTitle}>현재 성적 (제출된 퀴즈 평균 포함)</Text>
+                <TouchableOpacity>
+                  <Text style={[styles.seeMore, { color: '#FAFDFE' }]}>모두보기</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.scoreValue}>{currentUserScore}점</Text>
             </View>
-            <Text style={styles.scoreValue}>75.34</Text>
-            <TouchableOpacity style={styles.detailButton}>
-              <Text style={styles.detailButtonText}>자세히보기</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
+      
+      <TabBar activeTab="subject" />
+      
     </SafeAreaProvider>
   );
 }
@@ -462,7 +458,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#468BD7',
     borderRadius: 20,
-    padding: 16,
+    padding: 12,
     marginBottom: 11,
   },
   assignmentInfo: {
@@ -472,7 +468,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: '#fff',
-    marginBottom: 4,
+    marginBottom: 6,
     fontFamily: 'Pretendard',
   },
   assignmentDays: {
@@ -484,9 +480,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   assignmentTime: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#fff',
-    fontWeight: '600',
     fontFamily: 'Pretendard',
   },
   assignmentDate: {
@@ -495,9 +490,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard',
   },
   scoreSection: {
-    backgroundColor: '#468BD7',
+    backgroundColor: '#27609F',
     borderRadius: 20,
     padding: 20,
+    paddingBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 4 },
+    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.01,
+    shadowRadius: 6,
+    borderWidth: 0.4,
+    borderColor: '#000000',
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    width: `${currentUserScore * (113/100)}%`,
+    backgroundColor: '#468BD7',
+    borderRadius: 20,
+  },
+  scoreContent: {
+    position: 'relative',
+    zIndex: 1,
   },
   scoreHeader: {
     flexDirection: 'row',
@@ -506,36 +523,20 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   scoreTitle: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#fff',
     flex: 1,
     fontFamily: 'Pretendard',
   },
-  lectureButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#7B9FDB',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  lectureButtonText: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#fff',
-  },
   scoreValue: {
-    fontSize: 48,
+    fontSize: 30,
     fontWeight: '700',
     color: '#fff',
     marginBottom: 12,
     fontFamily: 'Pretendard',
   },
   detailButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 10,
-    padding: 12,
-    alignItems: 'center',
+
   },
   detailButtonText: {
     color: '#fff',
