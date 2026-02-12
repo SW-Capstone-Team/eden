@@ -4,7 +4,8 @@ import Ionicons from './module';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import TabBar from '../components/TabBar';
 
 type SubjectCardProps = {
   subject: string;
@@ -133,26 +134,7 @@ export default function SubjectMain() {
         </View>
       </Modal>
 
-      <View>
-        <SafeAreaView style={styles.tabBar} edges={['bottom']}>
-          <TouchableOpacity 
-            style={styles.tabItem} 
-            onPress={() => handleTabPress('MainStudent')}
-          >
-            <Ionicons name="home-outline" size={24} color="#666" />
-            <Text style={styles.tabTextInactive}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.tabItem}>
-            <Ionicons name="layers-outline" size={24} color="#468BD7" />
-            <Text style={styles.tabText}>Subject</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.tabItem}
-          onPress={() => navigation.navigate('Settings')}>
-            <Ionicons name="settings-outline" size={24} color="#666" />
-            <Text style={styles.tabTextInactive}>Setting</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </View>
+      <TabBar activeTab="subject" />
     </SafeAreaProvider>
   );
 }
@@ -301,25 +283,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     fontFamily: 'Pretendard',
-  },
-  tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#EEEEEE',
-  },
-  tabItem: {
-    alignItems: 'center',
-  },
-  tabText: {
-    fontSize: 12,
-    marginTop: 4,
-    color: '#468BD7',
-  },
-  tabTextInactive: {
-    fontSize: 12,
-    marginTop: 4,
-    color: '#666',
   },
 });

@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Settings from './pages/Settings';
 import ProfileSettings from './pages/ProfileSettings';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DocumentDetail from './pages/DocumentDetail';
 // import supabase from "./supabaseClient";
 
 export type RootStackParamList = {
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   SubjectDetail: undefined;
   Settings: undefined;
   ProfileSettings: undefined;
+  DocumentDetail: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -106,6 +108,11 @@ export default function App() {
         <Stack.Screen 
           name="ProfileSettings" 
           component={ProfileSettings} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="DocumentDetail" 
+          component={DocumentDetail} 
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
