@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
@@ -27,8 +21,8 @@ export default function DocumentDetailView() {
           >
             <Ionicons name="chevron-back" size={32} color="#333" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>250913 수업요약</Text>
         </View>
+        <Text style={styles.headerTitle}>250913 수업요약</Text>
       </View>
 
       <ScrollView 
@@ -133,6 +127,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#000',
     fontFamily: 'Pretendard',
+    marginLeft: 10,
+    marginTop: 10,
   },
   section: {
     marginBottom: 30,

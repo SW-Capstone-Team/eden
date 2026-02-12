@@ -12,6 +12,8 @@ import ProfileSettings from './pages/ProfileSettings';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DocumentDetail from './pages/DocumentDetail';
 import DocumentDetailView from './pages/DocumentDetailView';
+import QuizMain from './pages/QuizMain';
+import QuizResult from './pages/QuizResult';
 import axios from "axios";
 
 export type RootStackParamList = {
@@ -25,6 +27,8 @@ export type RootStackParamList = {
   ProfileSettings: undefined;
   DocumentDetail: undefined;
   DocumentDetailView: undefined;
+  QuizMain: undefined;
+  QuizResult: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -127,6 +131,16 @@ export default function App() {
         <Stack.Screen 
           name="DocumentDetailView" 
           component={DocumentDetailView} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="QuizMain" 
+          component={QuizMain} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="QuizResult" 
+          component={QuizResult} 
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

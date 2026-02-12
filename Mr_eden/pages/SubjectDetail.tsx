@@ -166,7 +166,7 @@ export default function SubjectDetail() {
           <View style={styles.sectionCard}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>퀴즈 일정</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('QuizMain')}>
                 <Text style={styles.seeMore}>모두보기</Text>
               </TouchableOpacity>
             </View>
@@ -218,7 +218,7 @@ export default function SubjectDetail() {
             <View style={styles.gradientOverlay} />
             <View style={styles.scoreContent}>
               <View style={styles.scoreHeader}>
-                <Text style={styles.scoreTitle}>현재 성적 (제출된 퀴즈 평균 포함)</Text>
+                <Text style={styles.scoreTitle}>현재 성적 (채점완료된 영역만 포함)</Text>
                 <TouchableOpacity>
                   <Text style={[styles.seeMore, { color: '#FAFDFE' }]}>모두보기</Text>
                 </TouchableOpacity>
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#468BD7',
     borderRadius: 20,
     padding: 15,
-    height: 85,
+    height: 75,
     justifyContent: 'space-between',
   },
   quizCardFooter: {
