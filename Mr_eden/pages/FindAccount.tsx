@@ -41,20 +41,8 @@ function FindAccount() {
       </View>
       
       <View style={styles.inputContainer}>
-        {findType === "비밀번호" && (
-          <>
-          <Text style={styles.itemText}>아이디 입력</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="아이디"
-            placeholderTextColor='#B7B7B7'
-            value={id}
-            onChangeText={setId}
-          />
-          </>
-        )}
         <Text style={styles.itemText}>이메일 주소</Text>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.rowinputs}>
           <TextInput
             style={styles.input}
             placeholder="이메일 주소"
@@ -62,14 +50,14 @@ function FindAccount() {
             value={email}
             onChangeText={setEmail}
           />
-          <Text style={{margin: 10, fontSize: 20}}>@</Text>
+          <Text style={{paddingTop: 15, fontSize: 20}}>@</Text>
           <TextInput
             style={styles.input}
-            placeholder=".com"
+            placeholder="naver.com"
             placeholderTextColor='#B7B7B7'
           />
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.rowinputs}>
           <TouchableOpacity style={[styles.proveButton]}>
             <Text style={styles.proveText}>인증요청</Text>
           </TouchableOpacity>
@@ -79,6 +67,34 @@ function FindAccount() {
             placeholderTextColor='#B7B7B7'
           />
         </View>
+        {findType === '아이디' ? <>
+        <Text style={styles.itemText}>새 아이디 입력</Text>
+        <View style={styles.rowinputs}>
+          <TextInput
+            style={styles.input}
+            placeholder="6~20자"
+            placeholderTextColor='#B7B7B7'
+            value={id}
+            onChangeText={setId}
+          />
+          <TouchableOpacity style={styles.proveButton}>
+          <Text style={styles.proveText}>중복확인</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.submitButton}>
+        <Text style={styles.submitButtonText}>아이디 변경</Text>
+        </TouchableOpacity>
+        </> : <>
+        <Text style={styles.itemText}>새 비밀번호 입력</Text>
+        <TextInput
+          style={[styles.input, {flex: 0}]}
+          placeholder="영문, 숫자, 특수문자 포함 8~20자"
+          placeholderTextColor='#B7B7B7'
+        />
+        <TouchableOpacity style={styles.submitButton}>
+        <Text style={styles.submitButtonText}>비밀번호 변경</Text>
+        </TouchableOpacity>
+        </>}
       </View>
 
     </SafeAreaProvider>
@@ -89,20 +105,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFDFE',
-    padding: 20,
+    paddingHorizontal: 20,
     fontFamily: 'Pretendard',
-    gap: 20
   },
   back: {
-    marginVertical: 20,
+    marginTop: 40,
+    width: 40
   },
   typeSelector: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    marginVertical: 10
   },
   typeButton: {
-    padding: 10,
-    flexDirection: 'row',
+    height: 40,
+    paddingHorizontal: 20,
     borderRadius: 35,
     borderWidth: 0.5,
     borderColor: '#000',
@@ -112,6 +129,7 @@ const styles = StyleSheet.create({
     borderColor: '#468BD7',
   },
   typeText: {
+    paddingTop: 8,
     fontSize: 16,
     color: '#000',
     fontWeight: '600'
@@ -120,38 +138,57 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   inputContainer: {
-    paddingTop: 10,
     paddingHorizontal: 20
   },
   itemText: {
+    marginTop: 10,
     fontSize: 18,
     fontWeight: '600',
-    marginVertical: 10
   },
   input: {
     flex: 1,
+    height: 40,
     borderWidth: 0.7,
     borderRadius: 35,
     borderColor: '#000000',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 7,
+    paddingLeft: 20,
+    marginTop: 10,
     marginBottom: 10,
     fontSize: 18,
     color: '#393939',
     fontWeight: '600'
   },
+  rowinputs: {
+    flexDirection: 'row',
+    gap: 10,
+  },
   proveButton: {
     backgroundColor: '#468BD7',
+    height: 40,
     borderRadius: 35,
     alignItems: 'center',
-    marginBottom: 10,
+    marginVertical: 10,
     width: 100
   },
   proveText: {
     color: '#fff',
     fontSize: 18,
-    padding: 10,
+    padding: 5,
     fontWeight: '600'
+  },
+  submitButton: {
+    backgroundColor: '#468BD7',
+    padding: 7,
+    height: 50,
+    borderRadius: 50,
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  submitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontWeight: '600',
   },
 });
 

@@ -54,7 +54,7 @@ export default function Register() {
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <TouchableOpacity style={{marginTop: 40}}
+      <TouchableOpacity style={styles.back}
         onPress={() => navigation.goBack()}
         ><Ionicons name="chevron-back" size={40} color="#000" />
       </TouchableOpacity>
@@ -116,7 +116,7 @@ export default function Register() {
         <Text style={styles.itemText}>소속학교</Text>
         <View style={styles.input}>
         <TextInput
-          style={[styles.itemText, {padding: 0}]}
+          style={[styles.itemText, {padding: 0, marginTop: 0}]}
           placeholder="학교 이름을 입력하세요"
           placeholderTextColor='#B7B7B7'
         ></TextInput>
@@ -143,7 +143,7 @@ export default function Register() {
           />
         </View>
         <Text style={styles.itemText}>이메일 주소</Text>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.rowinputs}>
           <TextInput
             style={styles.input}
             placeholder="이메일 주소"
@@ -151,7 +151,7 @@ export default function Register() {
             value={email}
             onChangeText={setEmail}
           />
-          <Text style={{paddingHorizontal: 10, paddingTop: 15, fontSize: 20}}>@</Text>
+          <Text style={{paddingTop: 15, fontSize: 20}}>@</Text>
           <TextInput
             style={styles.input}
             placeholder="naver.com"
@@ -184,6 +184,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontFamily: 'Pretendard'
   },
+  back: {
+    marginTop: 40,
+    width: 40
+  },
   typeSelector: {
     flexDirection: 'row',
     paddingHorizontal: 20,
@@ -192,7 +196,7 @@ const styles = StyleSheet.create({
   typeButton: {
     flex: 1,
     paddingHorizontal: 10,
-    marginVertical: 20,
+    marginVertical: 10,
     height: 40,
     flexDirection: 'row',
     borderRadius: 35,
@@ -216,6 +220,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   itemText: {
+    marginTop: 10,
     fontSize: 18,
     fontWeight: '600',
   },
@@ -229,8 +234,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     paddingVertical: 7,
     paddingLeft: 20,
-    marginTop: 10,
-    marginBottom: 20,
+    marginVertical: 10,
     fontSize: 18,
     color: '#393939',
     fontWeight: '600'
@@ -255,14 +259,15 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: '#468BD7',
-    paddingVertical: 15,
+    padding: 7,
+    height: 50,
     borderRadius: 50,
     alignItems: 'center',
     marginVertical: 10,
   },
   submitButtonText: {
     color: '#FFFFFF',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: '600',
   },
 });
